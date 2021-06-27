@@ -2,9 +2,11 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stdio.h>
+#include "philospher.h"
 
-pthread_mutex_t	*folks;
-pthread_t	*philos;
+t_philos_info	g_philos_info;
+pthread_mutex_t	*g_folks;
+pthread_t		*g_philos;
 
 void	*thr_philosopher(void *arg)
 {
@@ -13,25 +15,20 @@ void	*thr_philosopher(void *arg)
 	return ((void *)0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	int	num_of_philos = 5;  // 哲学者の数
-	// int	time_to_die_ms = 100;      // 最後に食事した時間から time_to_die_ms 経つと死ぬ
-	// int	time_to_eat_ms = 100;      // 食事にかかる時間[ms]
-	// int	time_to_sleep_ms = 100;    // 睡眠にかかる時間[ms]
-	// // 全哲学者が’number_of_times_each_philosopher_must_eat’回食事をしたらシミュレーション終了.
-	// // 指定されていない場合は全哲学者が死ぬまでシミュレーションが続く
-	// int	num_of_times_each_philo_must_eat = 10;
+	if (parse_philos_argv(argc, argv))
+		return (1);
 
-	folks = malloc(sizeof(pthread_mutex_t) * num_of_philos);
-	philos = malloc(sizeof(pthread_t) * num_of_philos);
-	if (!folks || !philos)
+	g_folks = malloc(sizeof(pthread_mutex_t) * g_philos_info.num_of_philos);
+	g_philos = malloc(sizeof(pthread_t) * g_philos_info.num_of_philos);
+	if (!g_folks || !g_philos)
 		return (1);
 
 	long	i = 0;
-	while (i < num_of_philos)
+	while (i < g_philos_info.num_of_philos)
 	{
-		if (pthread_create(&philos[i], NULL, thr_philosopher, (void *)i))
+		if (pthread_create(&g_philos[i], NULL, thr_philosopher, (void *)i))
 		{
 			printf("pthread_create() error!\n");
 			return (1);
@@ -40,9 +37,9 @@ int	main(void)
 	}
 
 	i = 0;
-	while ( i < num_of_philos)
+	while ( i < g_philos_info.num_of_philos)
 	{
-		pthread_join(philos[i], NULL);
+		pthread_join(g_philos[i], NULL);
 		i++;
 	}
 

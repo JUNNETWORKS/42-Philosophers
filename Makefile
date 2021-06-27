@@ -7,7 +7,9 @@ LINK_LIB := -pthread
 LINK_LIB += -lbsd
 LDFLAGS := $(LINK_LIB)
 
-SRCS := main.c
+SRCS := main.c \
+  parse_philos_argv.c \
+  ft_atoi.c ft_isdigit.c ft_strncmp.c
 OBJS := ${SRCS:.c=.o}
 DEPS := ${SRCS:.c=.d}
 
