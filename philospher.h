@@ -5,8 +5,8 @@
 
 enum e_philo_status {
 	EATING,
-	THINKING,
 	SLEEPING,
+	THINKING,
 };
 
 typedef struct s_philos_info {
@@ -20,15 +20,23 @@ typedef struct s_philos_info {
 } t_philos_info;
 
 typedef struct s_philo {
-	long	last_eating_ms;  // 最後に食べた時間
+	e_philo_status	status;
+	long			last_eating_ms;  // 最後に食べた時間
 } t_philo;
 
 t_philos_info	g_philos_info;
 t_philo			*g_philos;
-pthread_mutex_t	*g_folks;
+pthread_mutex_t	*g_forks;
 pthread_t		*g_philo_thrs;
 
 void	*thr_philosopher(void *arg);
 int		parse_philos_argv(int argc, char **argv);
+int		philospher_eat(int philo_no);
+int		philospher_sleep(int philo_no);
+int		philospher_think(int philo_no);
+// fork
+int		init_g_forks(int fork_num);
+void	hold_fork(int fork_idx);
+void	release_fork(int fork_idx);
 
 #endif
