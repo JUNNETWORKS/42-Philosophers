@@ -3,6 +3,9 @@ CC := gcc
 CFLAGS := -Werror -Wall -Wextra -g
 # flags -MMD -MP -MF for generating dependency files
 CFLAGS += -MMD -MP -MF
+LINK_LIB := -pthread
+LINK_LIB += -lbsd
+LDFLAGS := $(LINK_LIB)
 
 SRCS := main.c
 OBJS := ${SRCS:.c=.o}
@@ -16,7 +19,7 @@ all: ${NAME}
 -include $(DEPS)
 $(NAME): $(OBJS)
 	$(LIBFT_MAKE)
-	$(CC) -o $(NAME) $(OBJS) -lbsd
+	$(CC) -o $(NAME) $(OBJS) $(LDFLAGS)
 
 clean:
 	${RM} ${OBJS}
