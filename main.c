@@ -13,20 +13,20 @@ pthread_mutex_t	g_stdout_mutex;
 
 void	*thr_philosopher(void *arg)
 {
-	long	philo_no = (long)arg;
+	long	philo_idx = (long)arg;
 
-	g_philos[philo_no].status = EATING;
-	g_philos[philo_no].last_eating_ms = get_current_time_ms();
-	while (get_current_time_ms() - g_philos[philo_no].last_eating_ms < g_philos_info.time_to_die_ms)
+	g_philos[philo_idx].status = EATING;
+	g_philos[philo_idx].last_eating_ms = get_current_time_ms();
+	while (get_current_time_ms() - g_philos[philo_idx].last_eating_ms < g_philos_info.time_to_die_ms)
 	{
-		if (g_philos[philo_no].status == EATING)
-			philospher_eat(philo_no);
-		else if (g_philos[philo_no].status == SLEEPING)
-			philospher_sleep(philo_no);
-		else if (g_philos[philo_no].status == THINKING)
-			philospher_think(philo_no);
+		if (g_philos[philo_idx].status == EATING)
+			philospher_eat(philo_idx);
+		else if (g_philos[philo_idx].status == SLEEPING)
+			philospher_sleep(philo_idx);
+		else if (g_philos[philo_idx].status == THINKING)
+			philospher_think(philo_idx);
 	}
-	printf("This is Philo %ld %ld[ms]\n", philo_no, g_philos[philo_no].last_eating_ms);
+	printf("This is Philo %ld %ld[ms]\n", philo_idx, g_philos[philo_idx].last_eating_ms);
 	return ((void *)0);
 }
 

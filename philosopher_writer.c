@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include "philospher.h"
+
+/* {timestamp_in_ms} {philo_no} {status_msg} */
+void	write_philo_status(int philo_no, long ms, enum e_philo_status status)
+{
+	if (status == HAS_TAKEN_A_FORK)
+		printf("%ld %d has taken a fork\n", ms, philo_no);
+	else if (status == EATING)
+		printf("%ld %d is eating\n", ms, philo_no);
+	else if (status == SLEEPING)
+		printf("%ld %d is sleeping\n", ms, philo_no);
+	else if (status == THINKING)
+		printf("%ld %d is thinking\n", ms, philo_no);
+	else if (status == DIED)
+		printf("%ld %d is died\n", ms, philo_no);
+}

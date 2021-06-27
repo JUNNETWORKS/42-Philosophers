@@ -34,9 +34,10 @@ pthread_mutex_t	g_stdout_mutex;
 
 void	*thr_philosopher(void *arg);
 int		parse_philos_argv(int argc, char **argv);
-int		philospher_eat(int philo_no);
-int		philospher_sleep(int philo_no);
-int		philospher_think(int philo_no);
+int		philospher_eat(int philo_idx);
+int		philospher_sleep(int philo_idx);
+int		philospher_think(int philo_idx);
+void	write_philo_status(int philo_no, long ms, enum e_philo_status status);
 // fork
 int		init_g_forks(int fork_num);
 void	hold_fork(int fork_idx);
