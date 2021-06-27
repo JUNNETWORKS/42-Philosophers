@@ -8,7 +8,8 @@ LINK_LIB += -lbsd
 LDFLAGS := $(LINK_LIB)
 
 SRCS := main.c \
-  parse_philos_argv.c \
+  philosopher_actions.c parse_philos_argv.c \
+  fork.c \
   ft_atoi.c ft_isdigit.c ft_strncmp.c get_current_time_ms.c
 OBJS := ${SRCS:.c=.o}
 DEPS := ${SRCS:.c=.d}

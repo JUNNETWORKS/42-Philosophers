@@ -4,9 +4,11 @@
 # include <pthread.h>
 
 enum e_philo_status {
+	HAS_TAKEN_A_FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
+	DIED,
 };
 
 typedef struct s_philos_info {
@@ -20,14 +22,15 @@ typedef struct s_philos_info {
 } t_philos_info;
 
 typedef struct s_philo {
-	e_philo_status	status;
-	long			last_eating_ms;  // 最後に食べた時間
+	enum e_philo_status	status;
+	long				last_eating_ms;  // 最後に食べた時間
 } t_philo;
 
 t_philos_info	g_philos_info;
 t_philo			*g_philos;
 pthread_mutex_t	*g_forks;
 pthread_t		*g_philo_thrs;
+pthread_mutex_t	g_stdout_mutex;
 
 void	*thr_philosopher(void *arg);
 int		parse_philos_argv(int argc, char **argv);

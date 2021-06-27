@@ -11,20 +11,6 @@ static int	num_len(const char *str)
 	return (i);
 }
 
-static bool	is_long_overflow(const char *nptr, int sign)
-{
-	if (num_len(nptr) > 19)
-		return (true);
-	if (num_len(nptr) == 19)
-	{
-		if (sign == -1 && ft_strncmp(nptr, "9223372036854775808", 19) > 0)
-			return (true);
-		if (sign == 1 && ft_strncmp(nptr, "9223372036854775807", 19) > 0)
-			return (true);
-	}
-	return (false);
-}
-
 bool	is_int_overflow(const char *nptr, int sign)
 {
 	if (num_len(nptr) > 10)

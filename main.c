@@ -9,12 +9,13 @@ t_philos_info	g_philos_info;
 t_philo			*g_philos;
 pthread_mutex_t	*g_forks;
 pthread_t		*g_philo_thrs;
+pthread_mutex_t	g_stdout_mutex;
 
 void	*thr_philosopher(void *arg)
 {
 	long	philo_no = (long)arg;
 
-	g_philos[philo_no].status = THINKING;
+	g_philos[philo_no].status = EATING;
 	g_philos[philo_no].last_eating_ms = get_current_time_ms();
 	while (get_current_time_ms() - g_philos[philo_no].last_eating_ms < g_philos_info.time_to_die_ms)
 	{
