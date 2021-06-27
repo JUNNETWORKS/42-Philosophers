@@ -52,7 +52,7 @@ int	ft_atoi(const char *nptr, int *num)
 	if (*nptr == '+' || *nptr == '-')
 		if (*nptr++ == '-')
 			np = -1;
-	if (!ft_isdigit(*nptr) || is_long_overflow(nptr, np))
+	if (!ft_isdigit(*nptr) || is_int_overflow(nptr, np))
 		return (-1);
 	while (ft_isdigit(*nptr))
 		tmp = tmp * 10 + (*nptr++ - '0');
