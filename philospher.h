@@ -3,6 +3,12 @@
 
 # include <pthread.h>
 
+enum e_philo_status {
+	EATING,
+	THINKING,
+	SLEEPING,
+};
+
 typedef struct s_philos_info {
 	int	num_of_philos;  // 哲学者の数  number_of_philosophers
 	int	time_to_die_ms;      // 最後に食事した時間から time_to_die_ms 経つと死ぬ
@@ -13,9 +19,14 @@ typedef struct s_philos_info {
 	int	must_eat_times;  // number_of_times_each_philosopher_must_eat
 } t_philos_info;
 
+typedef struct s_philo {
+	long	last_eating_ms;  // 最後に食べた時間
+} t_philo;
+
 t_philos_info	g_philos_info;
+t_philo			*g_philos;
 pthread_mutex_t	*g_folks;
-pthread_t		*g_philos;
+pthread_t		*g_philo_thrs;
 
 void	*thr_philosopher(void *arg);
 int		parse_philos_argv(int argc, char **argv);

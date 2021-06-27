@@ -39,27 +39,23 @@ bool	is_int_overflow(const char *nptr, int sign)
 	return (false);
 }
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *nptr, int *num)
 {
-	unsigned int	num;
+	unsigned int	tmp;
 	int				np;
 
 	np = 1;
-	num = 0;
+	tmp = 0;
 	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\f'
 		|| *nptr == '\r' || *nptr == '\n' || *nptr == '\v')
 		nptr++;
 	if (*nptr == '+' || *nptr == '-')
 		if (*nptr++ == '-')
 			np = -1;
-	if (is_long_overflow(nptr, np))
-	{
-		if (np == 1)
-			return (-1);
-		else
-			return (0);
-	}
+	if (!ft_isdigit(*nptr) || is_long_overflow(nptr, np))
+		return (-1);
 	while (ft_isdigit(*nptr))
-		num = num * 10 + (*nptr++ - '0');
-	return ((int)(np * num));
+		tmp = tmp * 10 + (*nptr++ - '0');
+	*num = (int)(np * tmp);
+	return (0);
 }
