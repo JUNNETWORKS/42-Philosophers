@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include "philospher.h"
+#include "utils.h"
 
 /* {timestamp_in_ms} {philo_no} {status_msg} */
-void	write_philo_status(int philo_no, long ms, enum e_philo_status status)
+void	write_philo_status(int philo_no, enum e_philo_status status)
 {
+	long	ms;
+
+	ms = get_current_time_ms();
 	if (status == HAS_TAKEN_A_FORK)
 		printf("%ld %d has taken a fork\n", ms, philo_no);
 	else if (status == EATING)

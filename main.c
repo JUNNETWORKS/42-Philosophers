@@ -15,18 +15,18 @@ void	*thr_philosopher(void *arg)
 {
 	long	philo_idx = (long)arg;
 
-	g_philos[philo_idx].status = EATING;
+	g_philos[philo_idx].status = THINKING;
 	g_philos[philo_idx].last_eating_ms = get_current_time_ms();
-	while (get_current_time_ms() - g_philos[philo_idx].last_eating_ms < g_philos_info.time_to_die_ms)
+	g_philos[philo_idx].eating_count = 0;
+	while (get_current_time_ms() - g_philos[philo_idx].last_eating_ms < g_philos_info.time_to_die_ms
+		|| (g_philos_info.must_eat_times > 0 && g_philos[philo_idx].eating_count < g_philos_info.must_eat_times))
 	{
-		if (g_philos[philo_idx].status == EATING)
+		if (g_philos[philo_idx].status == THINKING)
 			philospher_eat(philo_idx);
 		else if (g_philos[philo_idx].status == SLEEPING)
 			philospher_sleep(philo_idx);
-		else if (g_philos[philo_idx].status == THINKING)
-			philospher_think(philo_idx);
 	}
-	printf("This is Philo %ld %ld[ms]\n", philo_idx, g_philos[philo_idx].last_eating_ms);
+	write_philo_status(philo_idx + 1, DIED);
 	return ((void *)0);
 }
 
@@ -58,6 +58,5 @@ int	main(int argc, char **argv)
 		pthread_join(g_philo_thrs[i], NULL);
 		i++;
 	}
-	printf("Hello Philosophers!!\n");
 	return (0);
 }
