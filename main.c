@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "philospher.h"
 #include "utils.h"
 
@@ -11,6 +12,18 @@ pthread_mutex_t	*g_forks;
 pthread_t		*g_philo_thrs;
 pthread_mutex_t	g_stdout_mutex;
 
+bool	has_philo_died(int philo_idx)
+{
+	int		rest_time_ms;
+	bool	has_eaten_n_times;
+
+	rest_time_ms = get_current_time_ms() - g_philos[philo_idx].last_eating_ms < g_philos_info.time_to_die_ms;
+	has_eaten_n_times = true;
+	if (g_philos_info.must_eat_times > 0)
+	has_eaten_n_times = g_philos[philo_idx].eating_count < g_philos_info.must_eat_times;
+	return (rest_time_ms <= 0 && has_eaten_n_times);
+}
+
 void	*thr_philosopher(void *arg)
 {
 	long	philo_idx = (long)arg;
@@ -18,8 +31,7 @@ void	*thr_philosopher(void *arg)
 	g_philos[philo_idx].status = THINKING;
 	g_philos[philo_idx].last_eating_ms = get_current_time_ms();
 	g_philos[philo_idx].eating_count = 0;
-	while (get_current_time_ms() - g_philos[philo_idx].last_eating_ms < g_philos_info.time_to_die_ms
-		|| (g_philos_info.must_eat_times > 0 && g_philos[philo_idx].eating_count < g_philos_info.must_eat_times))
+	while (!has_philo_died(philo_idx))
 	{
 		if (g_philos[philo_idx].status == THINKING)
 			philospher_eat(philo_idx);
