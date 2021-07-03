@@ -10,16 +10,16 @@ int	parse_philos_argv(int argc, char **argv)
 	{
 		printf("arguments must be\n");
 		printf("{program_name} number_of_philosophers time_to_die time_to_eat "
-			"time_to_sleep [number_of_times_each_philosopher_must_eat]");
+			"time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (1);
 	}
 	error = 0;
-	error |= ft_atoi(argv[1], &g_philos_info.num_of_philos);
-	error |= ft_atoi(argv[2], &g_philos_info.time_to_die_ms);
-	error |= ft_atoi(argv[3], &g_philos_info.time_to_eat_ms);
-	error |= ft_atoi(argv[4], &g_philos_info.time_to_sleep_ms);
+	error |= ft_atol(argv[1], &g_philos_info.num_of_philos);
+	error |= ft_atol(argv[2], &g_philos_info.time_to_die_ms);
+	error |= ft_atol(argv[3], &g_philos_info.time_to_eat_ms);
+	error |= ft_atol(argv[4], &g_philos_info.time_to_sleep_ms);
 	if (argc == 6)
-		error |= ft_atoi(argv[5], &g_philos_info.must_eat_times);
+		error |= ft_atol(argv[5], &g_philos_info.must_eat_times);
 	else
 		g_philos_info.must_eat_times = -1;
 	if (error)
