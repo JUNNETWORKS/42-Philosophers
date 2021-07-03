@@ -24,8 +24,8 @@ int	philospher_eat(int philo_idx)
 
 	hold_fork(fork_idx);
 	hold_fork(next_fork_idx);
-	write_philo_status(philo_idx + 1, HAS_TAKEN_A_FORK);
-	write_philo_status(philo_idx + 1, EATING);
+	write_philo_status(philo_idx, HAS_TAKEN_A_FORK);
+	write_philo_status(philo_idx, EATING);
 	g_philos[philo_idx].status = EATING;
 	usleep(g_philos_info.time_to_eat_ms);
 	release_fork(fork_idx);
@@ -39,9 +39,9 @@ int	philospher_eat(int philo_idx)
 
 int	philospher_sleep(int philo_idx)
 {
-	write_philo_status(philo_idx + 1, SLEEPING);
+	write_philo_status(philo_idx, SLEEPING);
 	usleep(g_philos_info.time_to_sleep_ms);
 	g_philos[philo_idx].status = THINKING;
-	write_philo_status(philo_idx + 1, THINKING);
+	write_philo_status(philo_idx, THINKING);
 	return (0);
 }

@@ -38,7 +38,7 @@ void	*thr_philosopher(void *arg)
 		else if (g_philos[philo_idx].status == SLEEPING)
 			philospher_sleep(philo_idx);
 	}
-	write_philo_status(philo_idx + 1, DIED);
+	write_philo_status(philo_idx, DIED);
 	return ((void *)0);
 }
 
