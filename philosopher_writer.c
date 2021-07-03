@@ -17,5 +17,5 @@ void	write_philo_status(int philo_no, enum e_philo_status status)
 	else if (status == THINKING)
 		printf("%ld %d is thinking\n", ms, philo_no);
 	else if (status == DIED)
-		printf("%ld %d is died\n", ms, philo_no);
+		printf("%ld %d died\n", ms, philo_no);
 }
