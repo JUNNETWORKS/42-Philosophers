@@ -14,14 +14,14 @@ pthread_mutex_t	g_stdout_mutex;
 
 bool	has_philo_died(int philo_idx)
 {
-	int		rest_time_ms;
+	long	rest_time_ms;
 	bool	has_eaten_n_times;
 
-	rest_time_ms = get_current_time_ms() - g_philos[philo_idx].last_eating_ms < g_philos_info.time_to_die_ms;
-	has_eaten_n_times = true;
+	rest_time_ms = g_philos_info.time_to_die_ms - (get_current_time_ms() - g_philos[philo_idx].last_eating_ms);
+	has_eaten_n_times = false;
 	if (g_philos_info.must_eat_times > 0)
-	has_eaten_n_times = g_philos[philo_idx].eating_count < g_philos_info.must_eat_times;
-	return (rest_time_ms <= 0 && has_eaten_n_times);
+		has_eaten_n_times = g_philos[philo_idx].eating_count >= g_philos_info.must_eat_times;
+	return (rest_time_ms <= 0 || has_eaten_n_times);
 }
 
 void	*thr_philosopher(void *arg)
