@@ -12,7 +12,7 @@ pthread_mutex_t	*g_forks;
 pthread_t		*g_philo_thrs;
 pthread_mutex_t	g_stdout_mutex;
 
-bool	has_philo_died(int philo_idx)
+bool	is_philo_still_alive(int philo_idx)
 {
 	long	rest_time_ms;
 	bool	has_eaten_n_times;
@@ -21,7 +21,7 @@ bool	has_philo_died(int philo_idx)
 	has_eaten_n_times = false;
 	if (g_philos_info.must_eat_times > 0)
 		has_eaten_n_times = g_philos[philo_idx].eating_count >= g_philos_info.must_eat_times;
-	return (rest_time_ms <= 0 || has_eaten_n_times);
+	return (rest_time_ms > 0 || !has_eaten_n_times);
 }
 
 void	*thr_philosopher(void *arg)
@@ -31,7 +31,7 @@ void	*thr_philosopher(void *arg)
 	g_philos[philo_idx].status = THINKING;
 	g_philos[philo_idx].last_eating_ms = get_current_time_ms();
 	g_philos[philo_idx].eating_count = 0;
-	while (!has_philo_died(philo_idx))
+	while (is_philo_still_alive(philo_idx))
 	{
 		if (g_philos[philo_idx].status == THINKING)
 			philospher_eat(philo_idx);
