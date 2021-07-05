@@ -9,7 +9,7 @@ int	init_g_philos(void)
 	i = 0;
 	while (i < g_philos_info.num_of_philos)
 	{
-		g_philos->is_living = true;
+		g_philos[i].is_living = true;
 		if (pthread_create(&g_philos[i].thread, NULL, thr_philosopher, (void *)i))
 		{
 			printf("pthread_create() error!\n");
