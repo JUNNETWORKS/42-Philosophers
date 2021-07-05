@@ -30,7 +30,7 @@ bool	is_philo_still_alive(t_philo *philo, long time_to_die_ms, long must_eat_tim
 	has_eaten_n_times = false;
 	if (must_eat_times > 0)
 		has_eaten_n_times = philo->eating_count >= must_eat_times;
-	return (rest_time_ms > 0 || !has_eaten_n_times);
+	return (rest_time_ms > 0 && !has_eaten_n_times);
 }
 
 int	start_g_philos(void)
