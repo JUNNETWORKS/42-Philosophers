@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "philospher.h"
+#include "philosopher.h"
 #include "utils.h"
 
 int	parse_philos_argv(int argc, char **argv)

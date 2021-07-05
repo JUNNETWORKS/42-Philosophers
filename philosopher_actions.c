@@ -2,10 +2,10 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stdio.h>
-#include "philospher.h"
+#include "philosopher.h"
 #include "utils.h"
 
-int	philospher_eat(int philo_idx)
+int	philosopher_eat(int philo_idx)
 {
 	int	fork_idx;
 	int	next_fork_idx;
@@ -41,7 +41,7 @@ int	philospher_eat(int philo_idx)
 	return (0);
 }
 
-int	philospher_sleep(int philo_idx)
+int	philosopher_sleep(int philo_idx)
 {
 	write_philo_status(philo_idx, SLEEPING);
 	usleep(g_philos_info.time_to_sleep_ms);

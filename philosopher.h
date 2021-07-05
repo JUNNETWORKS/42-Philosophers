@@ -2,6 +2,7 @@
 # define PHILOSOPHERS_H
 
 # include <pthread.h>
+# include <stdbool.h>
 
 /*
  * EATING -> THINKING -> SLEEPING -> EATING -> ...
@@ -28,18 +29,18 @@ typedef struct s_philo {
 	enum e_philo_status	status;
 	long				last_eating_ms;  // 最後に食べた時間
 	int					eating_count;
+	bool				has_died;
+	pthread_t			thread;
 } t_philo;
 
 t_philos_info	g_philos_info;
 t_philo			*g_philos;
 pthread_mutex_t	*g_forks;
-pthread_t		*g_philo_thrs;
-pthread_mutex_t	g_stdout_mutex;
 
 void	*thr_philosopher(void *arg);
 int		parse_philos_argv(int argc, char **argv);
-int		philospher_eat(int philo_idx);
-int		philospher_sleep(int philo_idx);
+int		philosopher_eat(int philo_idx);
+int		philosopher_sleep(int philo_idx);
 void	write_philo_status(int philo_idx, enum e_philo_status status);
 // fork
 int		init_g_forks(int fork_num);

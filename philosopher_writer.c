@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "philospher.h"
+#include "philosopher.h"
 #include "utils.h"
 
 /* {timestamp_in_ms} {philo_no} {status_msg} */

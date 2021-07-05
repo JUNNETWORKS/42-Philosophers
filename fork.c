@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stdio.h>
-#include "philospher.h"
+#include "philosopher.h"
 #include "utils.h"
 
 int	init_g_forks(int fork_num)
