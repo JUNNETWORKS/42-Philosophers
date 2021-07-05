@@ -29,7 +29,7 @@ typedef struct s_philo {
 	enum e_philo_status	status;
 	long				last_eating_ms;  // 最後に食べた時間
 	int					eating_count;
-	bool				has_died;
+	bool				is_living;
 	pthread_t			thread;
 } t_philo;
 
@@ -37,8 +37,11 @@ t_philos_info	g_philos_info;
 t_philo			*g_philos;
 pthread_mutex_t	*g_forks;
 
+int		init_g_philos(void);
 void	*thr_philosopher(void *arg);
 int		parse_philos_argv(int argc, char **argv);
+int		monitor_if_philosophers_are_living(void);
+bool	is_philo_still_alive(t_philo *philo, long time_to_die_ms, long must_eat_times);
 int		philosopher_eat(int philo_idx);
 int		philosopher_sleep(int philo_idx);
 void	write_philo_status(int philo_idx, enum e_philo_status status);

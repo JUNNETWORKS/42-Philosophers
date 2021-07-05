@@ -10,18 +10,6 @@ t_philos_info	g_philos_info;
 t_philo			*g_philos;
 pthread_mutex_t	*g_forks;
 
-bool	is_philo_still_alive(int philo_idx)
-{
-	long	rest_time_ms;
-	bool	has_eaten_n_times;
-
-	rest_time_ms = g_philos_info.time_to_die_ms - (get_current_time_ms() - g_philos[philo_idx].last_eating_ms);
-	has_eaten_n_times = false;
-	if (g_philos_info.must_eat_times > 0)
-		has_eaten_n_times = g_philos[philo_idx].eating_count >= g_philos_info.must_eat_times;
-	return (rest_time_ms > 0 || !has_eaten_n_times);
-}
-
 void	*thr_philosopher(void *arg)
 {
 	long	philo_idx = (long)arg;
@@ -36,46 +24,18 @@ void	*thr_philosopher(void *arg)
 		else if (g_philos[philo_idx].status == SLEEPING)
 			philosopher_sleep(philo_idx);
 	}
-	write_philo_status(philo_idx, DIED);
 	return ((void *)0);
 }
 
 int	main(int argc, char **argv)
 {
-	long	i;
-
 	if (parse_philos_argv(argc, argv))
 		return (1);
 	g_philos = malloc(sizeof(t_philo) * g_philos_info.num_of_philos);
 	g_forks = malloc(sizeof(pthread_mutex_t) * g_philos_info.num_of_philos);
-	if (!g_philos || !g_forks || init_g_forks(g_philos_info.num_of_philos))
+	if (!g_philos || !g_forks || init_g_forks(g_philos_info.num_of_philos)
+		|| init_g_philos())
 		return (1);
-	i = 0;
-	while (i < g_philos_info.num_of_philos)
-	{
-		g_philos->has_died = false;
-		if (pthread_create(&g_philos[i].thread, NULL, thr_philosopher, (void *)i))
-		{
-			printf("pthread_create() error!\n");
-			return (1);
-		}
-		i++;
-	}
-	i = 0;
-	int	philo_has_died_count = 0;  // 死んだ哲学者の数
-	while (philo_has_died_count < g_philos_info.num_of_philos)
-	{
-		// 各哲学者の死活管理を行う
-		// 死んでることが確認出来たら pthread_detach() でスレッドを終了させる
-		if (!g_philos[i].has_died && is_philo_still_alive(i))
-		{
-			pthread_detach(g_philos[i].thread);
-			g_philos[i].has_died = true;
-			write_philo_status(i, DIED);
-			philo_has_died_count++;
-		}
-		i++;
-		i = i % g_philos_info.num_of_philos;
-	}
+	monitor_if_philosophers_are_living();
 	return (0);
 }
