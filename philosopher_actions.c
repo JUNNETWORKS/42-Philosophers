@@ -25,11 +25,12 @@ int	philosopher_eat(int philo_idx)
 		next_fork_idx = philo_idx % g_philos_info.num_of_philos;
 	}
 
+	// TODO: 全ての動作(write_philo_status)を実行する前に生きているかどうか確かめる
 	hold_fork(fork_idx);
-	write_philo_status(philo_idx, HAS_TAKEN_A_FORK);
+	write_philo_status(philo_idx, HAS_TAKEN_A_FORK, get_current_time_ms());
 	hold_fork(next_fork_idx);
-	write_philo_status(philo_idx, HAS_TAKEN_A_FORK);
-	write_philo_status(philo_idx, EATING);
+	write_philo_status(philo_idx, HAS_TAKEN_A_FORK, get_current_time_ms());
+	write_philo_status(philo_idx, EATING, get_current_time_ms());
 	g_philos[philo_idx].status = EATING;
 	usleep(g_philos_info.time_to_eat_ms);
 	release_fork(fork_idx);
@@ -42,9 +43,9 @@ int	philosopher_eat(int philo_idx)
 
 int	philosopher_sleep(int philo_idx)
 {
-	write_philo_status(philo_idx, SLEEPING);
+	write_philo_status(philo_idx, SLEEPING, get_current_time_ms());
 	usleep(g_philos_info.time_to_sleep_ms);
 	g_philos[philo_idx].status = THINKING;
-	write_philo_status(philo_idx, THINKING);
+	write_philo_status(philo_idx, THINKING, get_current_time_ms());
 	return (0);
 }

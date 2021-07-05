@@ -11,7 +11,7 @@ static void	*thr_philosopher(void *arg)
 	g_philos[philo_idx].status = THINKING;
 	g_philos[philo_idx].last_eating_ms = get_current_time_ms();
 	g_philos[philo_idx].eating_count = 0;
-	while (1)
+	while (g_philos[philo_idx].is_living)
 	{
 		if (g_philos[philo_idx].status == THINKING)
 			philosopher_eat(philo_idx);
@@ -46,6 +46,7 @@ int	start_g_philos(void)
 			printf("pthread_create() error!\n");
 			return (-1);
 		}
+		pthread_detach(g_philos[i].thread);
 		i++;
 	}
 	return (0);

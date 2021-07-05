@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "philosopher.h"
+#include "utils.h"
 
 /* 哲学者の死活監視スレッド
  *
@@ -16,10 +17,9 @@ static void	*thr_philo_observer(void *arg)
 		if (!is_philo_still_alive(&g_philos[philo_idx],
 			g_philos_info.time_to_die_ms, g_philos_info.must_eat_times))
 		{
-			pthread_detach(g_philos[philo_idx].thread);
-			write_philo_status(philo_idx, DIED);
+			write_philo_status(philo_idx, DIED, get_current_time_ms());
 			g_philos[philo_idx].is_living = false;
-			break;
+			return ((void *)0);
 		}
 	}
 	return ((void *)0);
