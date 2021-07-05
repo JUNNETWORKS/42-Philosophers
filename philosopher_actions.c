@@ -32,8 +32,8 @@ int	philosopher_eat(int philo_idx)
 	write_philo_status(philo_idx, EATING);
 	g_philos[philo_idx].status = EATING;
 	usleep(g_philos_info.time_to_eat_ms);
-	release_fork(next_fork_idx);
 	release_fork(fork_idx);
+	release_fork(next_fork_idx);
 	g_philos[philo_idx].last_eating_ms = get_current_time_ms();
 	g_philos[philo_idx].eating_count += 1;
 	g_philos[philo_idx].status = SLEEPING;
