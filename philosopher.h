@@ -44,6 +44,9 @@ bool	is_philo_still_alive(int philo_idx);
 int		philosopher_eat(int philo_idx);
 int		philosopher_sleep(int philo_idx);
 void	write_philo_status(int philo_idx, enum e_philo_status status, long ms);
+// philosopher observer
+int		start_philo_observers(pthread_t	*philo_observers);
+int		wait_philo_observers(pthread_t	*philo_observers);
 // fork
 int		init_g_forks(int fork_num);
 void	hold_fork(int fork_idx);

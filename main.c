@@ -12,17 +12,17 @@ pthread_mutex_t	*g_forks;
 
 int	main(int argc, char **argv)
 {
-	long		i;
+	pthread_t	*philo_observers;
 
 	if (parse_philos_argv(argc, argv))
 		return (1);
 	g_philos = malloc(sizeof(t_philo) * g_philos_info.num_of_philos);
 	g_forks = malloc(sizeof(pthread_mutex_t) * g_philos_info.num_of_philos);
-	if (!g_philos || !g_forks
-		|| init_g_forks(g_philos_info.num_of_philos) || start_g_philos())
+	philo_observers = malloc(sizeof(pthread_mutex_t) * g_philos_info.num_of_philos);
+	if (!g_philos || !g_forks || !philo_observers
+		|| init_g_forks(g_philos_info.num_of_philos) || start_g_philos()
+		|| start_philo_observers(philo_observers))
 		return (1);
-	i = 0;
-	while (i < g_philos_info.num_of_philos)
-		pthread_join(g_philos[i++].thread, NULL);
+	wait_philo_observers(philo_observers);
 	return (0);
 }
