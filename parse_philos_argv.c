@@ -19,10 +19,15 @@ int	parse_philos_argv(int argc, char **argv)
 	error |= ft_atol(argv[3], &g_philos_info.time_to_eat_ms);
 	error |= ft_atol(argv[4], &g_philos_info.time_to_sleep_ms);
 	if (argc == 6)
+	{
 		error |= ft_atol(argv[5], &g_philos_info.must_eat_times);
+		if (g_philos_info.must_eat_times <= 0)
+			error |= 1;
+	}
 	else
 		g_philos_info.must_eat_times = -1;
-	if (error)
+	if (error || g_philos_info.num_of_philos <= 0 || g_philos_info.time_to_die_ms <= 0
+		|| g_philos_info.time_to_eat_ms <= 0 || g_philos_info.time_to_sleep_ms <= 0)
 	{
 		printf("argv is invalid!\n");
 		return (-1);
