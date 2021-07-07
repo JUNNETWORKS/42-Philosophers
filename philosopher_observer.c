@@ -15,12 +15,9 @@ static void	*thr_philo_observer(void *arg)
 	philo_idx = (long)arg;
 	while (1)
 	{
-		if (!is_philo_still_alive(&g_philos[philo_idx],
-			g_philos_info.time_to_die_ms, g_philos_info.must_eat_times))
+		if (!is_philo_still_alive(philo_idx))
 		{
 			g_philos[philo_idx].is_living = false;
-			usleep(10);
-			write_philo_status(philo_idx, DIED, get_current_time_ms());
 			return ((void *)0);
 		}
 	}
