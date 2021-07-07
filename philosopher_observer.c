@@ -18,6 +18,7 @@ static void	*thr_philo_observer(void *arg)
 		if (!is_philo_still_alive(philo_idx))
 		{
 			g_philos[philo_idx].is_living = false;
+			write_philo_status(philo_idx, DIED, get_current_time_ms());
 			return ((void *)0);
 		}
 	}

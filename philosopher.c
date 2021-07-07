@@ -20,7 +20,6 @@ static void	*thr_philosopher(void *arg)
 		else if (g_philos[philo_idx].status == SLEEPING)
 			philosopher_sleep(philo_idx);
 	}
-	write_philo_status(philo_idx, DIED, get_current_time_ms());
 	return ((void *)0);
 }
 
@@ -43,6 +42,8 @@ int	start_g_philos(void)
 	i = 0;
 	while (i < g_philos_info.num_of_philos)
 	{
+		// observerスレッドが先に動く場合がたまにあるのでここで一応現在時間をセットしておく
+		g_philos[i].last_eating_ms = get_current_time_ms();
 		g_philos[i].is_living = true;
 		if (pthread_create(&g_philos[i].thread, NULL, thr_philosopher, (void *)i))
 		{
