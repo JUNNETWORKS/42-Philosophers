@@ -14,7 +14,7 @@ int	main(int argc, char **argv)
 {
 	pthread_t	*philo_observers;
 
-	if (parse_philos_argv(argc, argv))
+	if (parse_philos_argv(argc, argv, &g_philos_info))
 		return (1);
 	g_philos = malloc(sizeof(t_philo) * g_philos_info.num_of_philos);
 	g_forks = malloc(sizeof(pthread_mutex_t) * g_philos_info.num_of_philos);

@@ -38,7 +38,7 @@ t_philo			*g_philos;
 pthread_mutex_t	*g_forks;
 
 int		start_g_philos(void);
-int		parse_philos_argv(int argc, char **argv);
+int		parse_philos_argv(int argc, char **argv, t_philos_info *philos_info);
 int		monitor_if_philosophers_are_living(void);
 bool	is_philo_still_alive(int philo_idx);
 int		philosopher_eat(int philo_idx);
