@@ -33,9 +33,9 @@ typedef struct s_philo {
 	pthread_t			thread;
 } t_philo;
 
-t_philos_info	g_philos_info;
-t_philo			*g_philos;
-pthread_mutex_t	*g_forks;
+extern t_philos_info	g_philos_info;
+extern t_philo			*g_philos;
+extern pthread_mutex_t	*g_forks;
 
 int		start_g_philos(void);
 int		parse_philos_argv(int argc, char **argv, t_philos_info *philos_info);
