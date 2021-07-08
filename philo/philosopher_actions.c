@@ -10,21 +10,6 @@ int	philosopher_eat(int philo_idx)
 	int	fork_idx;
 	int	next_fork_idx;
 
-// 	/* 哲学者の位置により右手か左手を優先する解法 */
-// 	if (philo_idx % 2 == 0)
-// 	{
-// 		// 哲学者が偶数なら右のフォークを先に取る
-// 		fork_idx = philo_idx % g_philos_info.num_of_philos;
-// 		next_fork_idx = (philo_idx + 1) % g_philos_info.num_of_philos;
-// 	}
-// 	else
-// 	{
-// 		// 哲学者が奇数の場合はスプーンのmutexのブロックを防ぐために10us待つ
-// 		usleep(10);
-// 		fork_idx = (philo_idx + 1) % g_philos_info.num_of_philos;
-// 		next_fork_idx = philo_idx % g_philos_info.num_of_philos;
-// 	}
-
 	/* リソース階層による解法
 	 * 各哲学者は大きいidxのフォークを最初に取る. その後小さいidxのフォークを取る風にする.
 	 * 食後は小さいフォークを解放してから大きいidxのフォークを解放する.
