@@ -15,6 +15,7 @@ void	philosopher_process(t_philos_info philos_info, long philo_idx)
 	philo.is_living = true;
 	if (is_philo_still_alive(philos_info, philo))
 		write_philo_status(philo_idx, THINKING, get_current_time_ms());
+	// TODO: 死活監視スレッドの作成
 	while (is_philo_still_alive(philos_info, philo))
 	{
 		if (philo.status == THINKING)

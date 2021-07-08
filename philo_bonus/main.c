@@ -24,8 +24,9 @@ int	main(int argc, char **argv)
 	// O_CREAT | O_EXCL で確実にセマフォを作成する. 既に同名のセマフォが存在している場合はエラー.
 	forks = sem_open(SEM_STR, O_CREAT | O_EXCL, S_IRWXU, philos_info.num_of_philos);
 	// 哲学者のプロセスを作成
-	start_philos_process(philos_info, philos_pid);
-
+	start_philo_processes(philos_info, philos_pid);
+	// 哲学者のプロセスが全て終了するまで待つ
+	wait_philo_processes(philos_info, philos_pid);
 	// セマフォを削除
 	sem_unlink(SEM_STR);
 	return (0);
