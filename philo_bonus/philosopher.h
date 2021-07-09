@@ -32,8 +32,9 @@ typedef struct s_philo {
 	enum e_philo_status	status;
 	long				last_eating_ms;
 	int					eating_count;
-	bool				is_living;
 } t_philo;
+
+extern t_philos_info	g_philos_info;
 
 void	philosopher_process(t_philos_info philos_info, long philo_idx);
 int		start_philo_processes(t_philos_info philos_info, pid_t *philos_pid);

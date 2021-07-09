@@ -13,7 +13,6 @@ int	philosopher_eat(t_philos_info philos_info, t_philo *philo)
 	sem_t	*forks;
 
 	forks = sem_open(SEM_STR, O_CREAT | O_EXCL, S_IRWXU, philos_info.num_of_philos);
-
 	philo_idx = philo->idx;
 	// TODO: セマフォを使った解法
 	philo->status = EATING;
