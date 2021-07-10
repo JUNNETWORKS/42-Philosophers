@@ -6,24 +6,25 @@
 #include "philosopher.h"
 #include "utils.h"
 
-t_philos_info	g_philos_info;
-t_philo			*g_philos;
-pthread_mutex_t	*g_forks;
-
 int	main(int argc, char **argv)
 {
-	pthread_t	*philo_observers;
+	pthread_t		*philo_observers;
+	t_philos_info	philos_info;
+	t_philo			*philos;
 
-	if (parse_philos_argv(argc, argv, &g_philos_info))
+	if (parse_philos_argv(argc, argv, &philos_info))
 		return (1);
-	g_philos = malloc(sizeof(t_philo) * g_philos_info.num_of_philos);
-	g_forks = malloc(sizeof(pthread_mutex_t) * g_philos_info.num_of_philos);
+	philos = malloc(sizeof(t_philo) * philos_info.num_of_philos);
+	philos_info.forks = malloc(
+			sizeof(pthread_mutex_t) * philos_info.num_of_philos);
 	philo_observers = malloc(
-			sizeof(pthread_mutex_t) * g_philos_info.num_of_philos);
-	if (!g_philos || !g_forks || !philo_observers
-		|| init_g_forks(g_philos_info.num_of_philos) || start_g_philos()
-		|| start_philo_observers(philo_observers))
+			sizeof(pthread_mutex_t) * philos_info.num_of_philos);
+	if (!philos || !philos_info.forks || !philo_observers
+		|| init_forks(philos_info.forks, philos_info.num_of_philos)
+		|| init_philos(&philos_info, philos)
+		|| start_philos(&philos_info, philos)
+		|| start_philo_observers(&philos_info, philos, philo_observers))
 		return (1);
-	wait_philo_observers(philo_observers);
+	wait_philo_observers(&philos_info, philo_observers);
 	return (0);
 }

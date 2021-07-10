@@ -5,54 +5,70 @@
 
 static void	*thr_philosopher(void *arg)
 {
-	long	philo_idx;
+	t_philo	*philo;
 
-	philo_idx = (long)arg;
-	g_philos[philo_idx].status = THINKING;
-	g_philos[philo_idx].last_eating_ms = get_current_time_ms();
-	g_philos[philo_idx].eating_count = 0;
-	if (is_philo_still_alive(philo_idx))
-		write_philo_status(philo_idx, THINKING, get_current_time_ms());
-	while (is_philo_still_alive(philo_idx))
+	philo = (t_philo *)arg;
+	philo->status = THINKING;
+	philo->last_eating_ms = get_current_time_ms();
+	philo->eating_count = 0;
+	if (is_philo_still_alive(*philo->philos_info, *philo))
+		write_philo_status(philo->idx, THINKING, get_current_time_ms());
+	while (is_philo_still_alive(*philo->philos_info, *philo))
 	{
-		if (g_philos[philo_idx].status == THINKING)
-			philosopher_eat(philo_idx);
-		else if (g_philos[philo_idx].status == SLEEPING)
-			philosopher_sleep(philo_idx);
+		if (philo->status == THINKING)
+			philosopher_eat(philo->philos_info, philo);
+		else if (philo->status == SLEEPING)
+			philosopher_sleep(philo->philos_info, philo);
 	}
 	return ((void *)0);
 }
 
-bool	is_philo_still_alive(int philo_idx)
+bool	is_philo_still_alive(t_philos_info philos_info, t_philo philo)
 {
 	long	rest_time_ms;
 	bool	has_eaten_n_times;
 
-	rest_time_ms = g_philos_info.time_to_die_ms
-		- (get_current_time_ms() - g_philos[philo_idx].last_eating_ms);
+	rest_time_ms = philos_info.time_to_die_ms
+		- (get_current_time_ms() - philo.last_eating_ms);
 	has_eaten_n_times = false;
-	if (g_philos_info.must_eat_times > 0)
+	if (philos_info.must_eat_times > 0)
 		has_eaten_n_times
-			= g_philos[philo_idx].eating_count >= g_philos_info.must_eat_times;
+			= philo.eating_count >= philos_info.must_eat_times;
 	return (rest_time_ms > 0 && !has_eaten_n_times);
 }
 
-int	start_g_philos(void)
+int	start_philos(t_philos_info *philos_info, t_philo *philos)
 {
 	long	i;
 
 	i = 0;
-	while (i < g_philos_info.num_of_philos)
+	while (i < philos_info->num_of_philos)
 	{
-		g_philos[i].last_eating_ms = get_current_time_ms();
-		g_philos[i].is_living = true;
-		if (pthread_create(&g_philos[i].thread, NULL,
-				thr_philosopher, (void *)i))
+		if (pthread_create(&philos[i].thread, NULL,
+				thr_philosopher, (void *)(philos + i)))
 		{
 			printf("pthread_create() error!\n");
 			return (-1);
 		}
-		pthread_detach(g_philos[i].thread);
+		pthread_detach(philos[i].thread);
+		i++;
+	}
+	return (0);
+}
+
+int	init_philos(t_philos_info *philos_info, t_philo *philos)
+{
+	long	i;
+
+	i = 0;
+	while (i < philos_info->num_of_philos)
+	{
+		philos[i].idx = i;
+		philos[i].status = THINKING;
+		philos[i].last_eating_ms = get_current_time_ms();
+		philos[i].eating_count = 0;
+		philos[i].is_living = true;
+		philos[i].philos_info = philos_info;
 		i++;
 	}
 	return (0);

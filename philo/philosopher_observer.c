@@ -10,30 +10,31 @@
  */
 static void	*thr_philo_observer(void *arg)
 {
-	long	philo_idx;
+	t_philo	*philo;
 
-	philo_idx = (long)arg;
+	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (!is_philo_still_alive(philo_idx))
+		if (!is_philo_still_alive(*philo->philos_info, *philo))
 		{
-			g_philos[philo_idx].is_living = false;
-			write_philo_status(philo_idx, DIED, get_current_time_ms());
+			philo->is_living = false;
+			write_philo_status(philo->idx, DIED, get_current_time_ms());
 			return ((void *)0);
 		}
 	}
 	return ((void *)0);
 }
 
-int	start_philo_observers(pthread_t	*philo_observers)
+int	start_philo_observers(t_philos_info *philos_info,
+	t_philo *philos, pthread_t *philo_observers)
 {
 	long	i;
 
 	i = 0;
-	while (i < g_philos_info.num_of_philos)
+	while (i < philos_info->num_of_philos)
 	{
 		if (pthread_create(&philo_observers[i], NULL,
-				thr_philo_observer, (void *)i))
+				thr_philo_observer, (void *)(philos + i)))
 		{
 			printf("pthread_create() error!\n");
 			return (-1);
@@ -43,12 +44,12 @@ int	start_philo_observers(pthread_t	*philo_observers)
 	return (0);
 }
 
-int	wait_philo_observers(pthread_t	*philo_observers)
+int	wait_philo_observers(t_philos_info *philos_info, pthread_t *philo_observers)
 {
 	long	i;
 
 	i = 0;
-	while (i < g_philos_info.num_of_philos)
+	while (i < philos_info->num_of_philos)
 		pthread_join(philo_observers[i++], NULL);
 	return (0);
 }
