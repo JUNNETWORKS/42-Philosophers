@@ -1,5 +1,5 @@
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILOSOPHER_H
+# define PHILOSOPHER_H
 
 # include <pthread.h>
 # include <stdbool.h>
@@ -16,22 +16,20 @@ enum e_philo_status {
 };
 
 typedef struct s_philos_info {
-	long	num_of_philos;  // 哲学者の数  number_of_philosophers
-	long	time_to_die_ms;      // 最後に食事した時間から time_to_die_ms 経つと死ぬ
-	long	time_to_eat_ms;      // 食事にかかる時間[ms]
-	long	time_to_sleep_ms;    // 睡眠にかかる時間[ms]
-	// 全哲学者が’number_of_times_each_philosopher_must_eat’回食事をしたらシミュレーション終了.
-	// 指定されていない場合は全哲学者が死ぬまでシミュレーションが続く
-	long	must_eat_times;  // number_of_times_each_philosopher_must_eat
-} t_philos_info;
+	long	num_of_philos;
+	long	time_to_die_ms;
+	long	time_to_eat_ms;
+	long	time_to_sleep_ms;
+	long	must_eat_times;
+}	t_philos_info;
 
 typedef struct s_philo {
 	enum e_philo_status	status;
-	long				last_eating_ms;  // 最後に食べた時間
+	long				last_eating_ms;
 	int					eating_count;
 	bool				is_living;
 	pthread_t			thread;
-} t_philo;
+}	t_philo;
 
 extern t_philos_info	g_philos_info;
 extern t_philo			*g_philos;
