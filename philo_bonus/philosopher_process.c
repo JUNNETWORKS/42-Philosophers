@@ -5,7 +5,7 @@
 #include "philosopher.h"
 #include "utils.h"
 
-static t_philo	philo;
+static t_philo	g_philo;
 
 /* 哲学者の死活監視スレッド
  *
@@ -19,7 +19,7 @@ static void	*thr_philo_observer(void *arg)
 	philo_idx = (long)arg;
 	while (1)
 	{
-		if (!is_philo_still_alive(g_philos_info, philo))
+		if (!is_philo_still_alive(g_philos_info, g_philo))
 		{
 			write_philo_status(philo_idx, DIED, get_current_time_ms());
 			return ((void *)0);
@@ -30,24 +30,25 @@ static void	*thr_philo_observer(void *arg)
 
 void	philosopher_process(t_philos_info philos_info, long philo_idx)
 {
-	pthread_t	observer_thrid;
+	pthread_t	observer_thr_id;
 
 	// 初期化
-	philo.idx = philo_idx;
-	philo.status = THINKING;
-	philo.last_eating_ms = get_current_time_ms();
-	philo.eating_count = 0;
+	g_philo.idx = philo_idx;
+	g_philo.status = THINKING;
+	g_philo.last_eating_ms = get_current_time_ms();
+	g_philo.eating_count = 0;
 	// 死活監視スレッドの作成
-	if (pthread_create(&observer_thrid, NULL, thr_philo_observer, (void *)philo_idx))
+	if (pthread_create(&observer_thr_id, NULL, thr_philo_observer, (void *)philo_idx))
 		exit(1);
-	if (is_philo_still_alive(philos_info, philo))
+	if (is_philo_still_alive(philos_info, g_philo))
 		write_philo_status(philo_idx, THINKING, get_current_time_ms());
-	while (is_philo_still_alive(philos_info, philo))
+	while (is_philo_still_alive(philos_info, g_philo))
 	{
-		if (philo.status == THINKING)
-			philosopher_eat(philos_info, &philo);
-		else if (philo.status == SLEEPING)
-			philosopher_sleep(philos_info, &philo);
+		if (g_philo.status == THINKING)
+			philosopher_eat(philos_info, &g_philo);
+		else if (g_philo.status == SLEEPING)
+			philosopher_sleep(philos_info, &g_philo);
 	}
+	pthread_join(observer_thr_id, NULL);
 	exit(0);
 }
