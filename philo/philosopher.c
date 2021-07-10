@@ -28,10 +28,12 @@ bool	is_philo_still_alive(int philo_idx)
 	long	rest_time_ms;
 	bool	has_eaten_n_times;
 
-	rest_time_ms = g_philos_info.time_to_die_ms - (get_current_time_ms() - g_philos[philo_idx].last_eating_ms);
+	rest_time_ms = g_philos_info.time_to_die_ms
+		- (get_current_time_ms() - g_philos[philo_idx].last_eating_ms);
 	has_eaten_n_times = false;
 	if (g_philos_info.must_eat_times > 0)
-		has_eaten_n_times = g_philos[philo_idx].eating_count >= g_philos_info.must_eat_times;
+		has_eaten_n_times
+			= g_philos[philo_idx].eating_count >= g_philos_info.must_eat_times;
 	return (rest_time_ms > 0 && !has_eaten_n_times);
 }
 
@@ -42,10 +44,10 @@ int	start_g_philos(void)
 	i = 0;
 	while (i < g_philos_info.num_of_philos)
 	{
-		// observerスレッドが先に動く場合がたまにあるのでここで一応現在時間をセットしておく
 		g_philos[i].last_eating_ms = get_current_time_ms();
 		g_philos[i].is_living = true;
-		if (pthread_create(&g_philos[i].thread, NULL, thr_philosopher, (void *)i))
+		if (pthread_create(&g_philos[i].thread, NULL,
+				thr_philosopher, (void *)i))
 		{
 			printf("pthread_create() error!\n");
 			return (-1);
