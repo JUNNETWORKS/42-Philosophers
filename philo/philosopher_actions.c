@@ -5,39 +5,43 @@
 #include "philosopher.h"
 #include "utils.h"
 
+static void	get_fork_idxes(int *fork_idx, int *next_fork_idx, int philo_idx)
+{
+	if (philo_idx < g_philos_info.num_of_philos - 1)
+	{
+		*fork_idx = philo_idx + 1;
+		*next_fork_idx = philo_idx;
+	}
+	else
+	{
+		*fork_idx = g_philos_info.num_of_philos - 1;
+		*next_fork_idx = 0;
+	}
+}
+
+static int	release_fork_and_rtn_err(int fork_idx)
+{
+	release_fork(fork_idx);
+	return (-1);
+}
+
+/* リソース階層による解法
+ * 各哲学者は大きいidxのフォークを最初に取る. その後小さいidxのフォークを取る風にする.
+ * 食後は小さいフォークを解放してから大きいidxのフォークを解放する.
+ */
 int	philosopher_eat(int philo_idx)
 {
 	int	fork_idx;
 	int	next_fork_idx;
 
-	/* リソース階層による解法
-	 * 各哲学者は大きいidxのフォークを最初に取る. その後小さいidxのフォークを取る風にする.
-	 * 食後は小さいフォークを解放してから大きいidxのフォークを解放する.
-	 */
-	if (philo_idx < g_philos_info.num_of_philos - 1)
-	{
-		fork_idx = philo_idx + 1;
-		next_fork_idx = philo_idx;
-	}
-	else
-	{
-		fork_idx = g_philos_info.num_of_philos - 1;
-		next_fork_idx = 0;
-	}
-
+	get_fork_idxes(&fork_idx, &next_fork_idx, philo_idx);
 	hold_fork(fork_idx);
 	if (!is_philo_still_alive(philo_idx))
-	{
-		release_fork(fork_idx);
-		return (1);
-	}
+		return (release_fork_and_rtn_err(fork_idx));
 	write_philo_status(philo_idx, HAS_TAKEN_A_FORK, get_current_time_ms());
 	hold_fork(next_fork_idx);
 	if (!is_philo_still_alive(philo_idx))
-	{
-		release_fork(next_fork_idx);
-		return (1);
-	}
+		return (release_fork_and_rtn_err(next_fork_idx));
 	write_philo_status(philo_idx, HAS_TAKEN_A_FORK, get_current_time_ms());
 	if (!is_philo_still_alive(philo_idx))
 		return (1);
