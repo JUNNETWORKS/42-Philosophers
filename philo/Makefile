@@ -1,6 +1,7 @@
 NAME := philo
 CC := gcc
-CFLAGS := -Werror -Wall -Wextra -g
+CFLAGS := -Werror -Wall -Wextra
+CFLAGS += -g -fsanitize=thread
 # flags -MMD -MP -MF for generating dependency files
 CFLAGS += -MMD -MP
 LINK_LIB := -pthread
@@ -25,7 +26,7 @@ $(OBJS_DIR)/%.o: %.c
 -include $(DEPS)
 $(NAME): $(OBJS)
 	$(LIBFT_MAKE)
-	$(CC) -o $(NAME) $(OBJS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
 
 clean:
 	${RM} ${OBJS}
