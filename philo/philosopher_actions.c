@@ -34,8 +34,8 @@ static void	get_fork_idxes(
 	}
 	else
 	{
-		*fork_idx = num_of_forks - 1;
-		*next_fork_idx = 0;
+		*fork_idx = 0;
+		*next_fork_idx = num_of_forks - 1;
 	}
 }
 
