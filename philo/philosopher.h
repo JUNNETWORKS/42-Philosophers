@@ -53,5 +53,7 @@ int		wait_philo_observers(t_philos_info *philos_info,
 int		init_forks(pthread_mutex_t *forks, int fork_num);
 void	hold_fork(pthread_mutex_t *forks, int fork_idx);
 void	release_fork(pthread_mutex_t *forks, int fork_idx);
+void	release_forks(pthread_mutex_t *forks, int fork_idx1, int fork_idx2);
+int		release_forks_and_rtn_err(pthread_mutex_t *forks, int fork_idx1, int fork_idx2);
 
 #endif

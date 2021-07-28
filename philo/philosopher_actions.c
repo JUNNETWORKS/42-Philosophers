@@ -39,12 +39,6 @@ static void	get_fork_idxes(
 	}
 }
 
-static int	release_fork_and_rtn_err(pthread_mutex_t *forks, int fork_idx)
-{
-	release_fork(forks, fork_idx);
-	return (-1);
-}
-
 /* リソース階層による解法
  * 各哲学者は大きいidxのフォークを最初に取る. その後小さいidxのフォークを取る風にする.
  * 食後は小さいフォークを解放してから大きいidxのフォークを解放する.
