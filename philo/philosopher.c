@@ -25,22 +25,6 @@ static void	*thr_philosopher(void *arg)
 	return ((void *)0);
 }
 
-bool	has_philo_eaten_n_times(t_philos_info *philos_info, t_philo *philo)
-{
-	if (philos_info->must_eat_times < 0)
-		return (false);
-	return (philo->eating_count >= philos_info->must_eat_times);
-}
-
-bool	is_philo_still_alive(t_philos_info *philos_info, t_philo *philo)
-{
-	long	rest_time_ms;
-
-	rest_time_ms = philos_info->time_to_die_ms
-		- (get_current_time_ms() - philo->last_eating_ms);
-	return (rest_time_ms > 0);
-}
-
 int	start_philos(t_philos_info *philos_info, t_philo *philos)
 {
 	long	i;
