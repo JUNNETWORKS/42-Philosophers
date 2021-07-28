@@ -6,6 +6,26 @@
 #include "philosopher.h"
 #include "utils.h"
 
+static void	wait_philos(t_philos_info *philos_info, t_philo *philos)
+{
+	int	i;
+	int	will_stop_simulation;
+
+	i = 0;
+	will_stop_simulation = false;
+	while (!will_stop_simulation)
+	{
+		if (!is_philo_still_alive(philos_info, &philos[i]))
+		{
+			write_philo_status(i, DIED, get_current_time_ms());
+			will_stop_simulation = true;
+		}
+		else if (has_philo_eaten_n_times(philos_info, &philos[i]))
+			will_stop_simulation = true;
+		i = (i + 1) % philos_info->num_of_philos;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	pthread_t		*philo_observers;
@@ -22,9 +42,10 @@ int	main(int argc, char **argv)
 	if (!philos || !philos_info.forks || !philo_observers
 		|| init_forks(philos_info.forks, philos_info.num_of_philos)
 		|| init_philos(&philos_info, philos)
-		|| start_philos(&philos_info, philos)
-		|| start_philo_observers(&philos_info, philos, philo_observers))
+		|| start_philos(&philos_info, philos))
+		// || start_philo_observers(&philos_info, philos, philo_observers))
 		return (1);
-	wait_philo_observers(&philos_info, philo_observers);
+	// wait_philo_observers(&philos_info, philo_observers);
+	wait_philos(&philos_info, philos);
 	return (0);
 }
