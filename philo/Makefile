@@ -1,7 +1,7 @@
 NAME := philo
 CC := gcc
 CFLAGS := -Werror -Wall -Wextra
-CFLAGS += -g -fsanitize=thread
+# CFLAGS += -g -fsanitize=thread
 # flags -MMD -MP -MF for generating dependency files
 CFLAGS += -MMD -MP
 LINK_LIB := -pthread

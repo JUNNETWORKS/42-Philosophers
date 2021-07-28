@@ -72,10 +72,10 @@ int	philosopher_eat(t_philos_info *philos_info, t_philo *philo)
 	usleep(philos_info->time_to_eat_ms * 1000);
 	pthread_mutex_lock(&philo->mux);
 	// release_forks(philos_info->forks, fork_idx, next_fork_idx);
-	printf("start release_fork (%ld): %d\n", philo->idx, next_fork_idx);
+	// printf("start release_fork (%ld): %d\n", philo->idx, next_fork_idx);
 	release_fork(philos_info->forks, next_fork_idx);
 	// printf("end release_fork (%ld): %d\n", philo->idx, next_fork_idx);
-	printf("start release_fork (%ld): %d\n", philo->idx, fork_idx);
+	// printf("start release_fork (%ld): %d\n", philo->idx, fork_idx);
 	release_fork(philos_info->forks, fork_idx);
 	// printf("end release_fork (%ld): %d\n", philo->idx, fork_idx);
 	philo->eating_count += 1;
