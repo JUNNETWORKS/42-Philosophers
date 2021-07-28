@@ -5,7 +5,9 @@ CFLAGS := -Werror -Wall -Wextra
 # flags -MMD -MP -MF for generating dependency files
 CFLAGS += -MMD -MP
 LINK_LIB := -pthread
-LINK_LIB += -lbsd
+ifeq ($(shell uname), Linux)
+        LINK_LIB += -lbsd
+endif
 LDFLAGS := $(LINK_LIB)
 
 OBJS_DIR := objs
