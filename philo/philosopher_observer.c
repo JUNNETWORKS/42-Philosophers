@@ -13,14 +13,28 @@ static void	*thr_philo_observer(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (1)
+	while (!is_philo_simulation_ended(philo->philos_info, philo))
 	{
-		if (!is_philo_still_alive(philo->philos_info, philo))
+		if (!is_philo_still_alive(philo))
 		{
+			pthread_mutex_lock(&philo->mux);
+			pthread_mutex_lock(&philo->philos_info->mux);
 			philo->is_living = false;
+			philo->philos_info->end_of_simulation = true;
+			pthread_mutex_unlock(&philo->philos_info->mux);
+			pthread_mutex_unlock(&philo->mux);
 			write_philo_status(philo->idx, DIED, get_current_time_ms());
-			return ((void *)0);
+			break ;
 		}
+		if (has_philo_eaten_n_times(philo))
+		{
+			pthread_mutex_lock(&philo->mux);
+			philo->is_living = false;
+			pthread_mutex_unlock(&philo->mux);
+			write_philo_status(philo->idx, HAS_EATEN, get_current_time_ms());
+			break ;
+		}
+		usleep(100);
 	}
 	return ((void *)0);
 }

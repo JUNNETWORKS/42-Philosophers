@@ -8,14 +8,14 @@ static void	*thr_philosopher(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->mux);
 	philo->status = THINKING;
 	philo->last_eating_ms = get_current_time_ms();
 	philo->eating_count = 0;
-	if (is_philo_still_alive(philo->philos_info, philo)
-		|| has_philo_eaten_n_times(philo->philos_info, philo))
+	pthread_mutex_unlock(&philo->mux);
+	if (!is_philo_simulation_ended(philo->philos_info, philo))
 		write_philo_status(philo->idx, THINKING, get_current_time_ms());
-	while (is_philo_still_alive(philo->philos_info, philo)
-		|| has_philo_eaten_n_times(philo->philos_info, philo))
+	while (!is_philo_simulation_ended(philo->philos_info, philo))
 	{
 		if (philo->status == THINKING)
 			philosopher_eat(philo->philos_info, philo);
@@ -56,6 +56,8 @@ int	init_philos(t_philos_info *philos_info, t_philo *philos)
 		philos[i].eating_count = 0;
 		philos[i].is_living = true;
 		philos[i].philos_info = philos_info;
+		if (pthread_mutex_init(&philos[i].mux, NULL))
+			return (1);
 		i++;
 	}
 	return (0);

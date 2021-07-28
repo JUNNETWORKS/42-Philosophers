@@ -13,14 +13,17 @@ enum e_philo_status {
 	SLEEPING,
 	THINKING,
 	DIED,
+	HAS_EATEN,
 };
 
 typedef struct s_philos_info {
+	pthread_mutex_t	mux;
 	long			num_of_philos;
 	long			time_to_die_ms;
 	long			time_to_eat_ms;
 	long			time_to_sleep_ms;
 	long			must_eat_times;
+	bool			end_of_simulation;
 	pthread_mutex_t	*forks;
 }	t_philos_info;
 
@@ -30,6 +33,7 @@ typedef struct s_philo {
 	long				last_eating_ms;
 	int					eating_count;
 	bool				is_living;
+	pthread_mutex_t		mux;
 	pthread_t			thread;
 	t_philos_info		*philos_info;
 }	t_philo;
