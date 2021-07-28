@@ -24,14 +24,14 @@ int	parse_philos_argv(int argc, char **argv, t_philos_info *philos_info)
 	if (argc == 6)
 	{
 		error |= ft_atol(argv[5], &philos_info->must_eat_times);
-		error |= philos_info->must_eat_times <= 0;
+		error |= philos_info->must_eat_times < 0;
 	}
 	else
 		philos_info->must_eat_times = -1;
-	if (error || philos_info->num_of_philos <= 0
-		|| philos_info->time_to_die_ms <= 0
-		|| philos_info->time_to_eat_ms <= 0
-		|| philos_info->time_to_sleep_ms <= 0)
+	if (error || philos_info->num_of_philos < 0
+		|| philos_info->time_to_die_ms < 0
+		|| philos_info->time_to_eat_ms < 0
+		|| philos_info->time_to_sleep_ms < 0)
 	{
 		printf("argv is invalid!\n");
 		return (-1);
