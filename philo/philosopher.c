@@ -13,8 +13,6 @@ static void	*thr_philosopher(void *arg)
 	philo->last_eating_ms = get_current_time_ms();
 	philo->eating_count = 0;
 	pthread_mutex_unlock(&philo->mux);
-	if (!is_philo_simulation_ended(philo->philos_info, philo))
-		write_philo_status(philo->idx, THINKING, get_current_time_ms());
 	while (!is_philo_simulation_ended(philo->philos_info, philo))
 	{
 		if (philo->status == THINKING)

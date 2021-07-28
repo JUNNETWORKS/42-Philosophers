@@ -17,8 +17,8 @@ static void	get_fork_idxes(
 	}
 	else
 	{
-		// 哲学者が奇数の場合はスプーンのmutexのブロックを防ぐために10us待つ
-		usleep(10);
+		// 哲学者が奇数の場合はスプーンのmutexのブロックを防ぐために200us待つ
+		usleep(200);
 		*fork_idx = (philo_idx + 1) % num_of_forks;
 		*next_fork_idx = philo_idx % num_of_forks;
 	}
