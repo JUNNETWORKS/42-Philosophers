@@ -12,7 +12,7 @@ int	init_forks(pthread_mutex_t *forks, int fork_num)
 	i = 0;
 	while (i < fork_num)
 	{
-		if (pthread_mutex_init(forks + i, NULL))
+		if (pthread_mutex_init(&forks[i], NULL))
 			return (-1);
 		i++;
 	}
