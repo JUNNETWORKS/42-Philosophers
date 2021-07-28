@@ -8,6 +8,25 @@
 static void	get_fork_idxes(
 	long num_of_forks, int *fork_idx, int *next_fork_idx, int philo_idx)
 {
+//	/* 哲学者の位置により右手か左手を優先する解法 */
+//	if (philo_idx % 2 == 0)
+//	{
+//		// 哲学者が偶数なら右のフォークを先に取る
+//		*fork_idx = philo_idx % num_of_forks;
+//		*next_fork_idx = (philo_idx + 1) % num_of_forks;
+//	}
+//	else
+//	{
+//		// 哲学者が奇数の場合はスプーンのmutexのブロックを防ぐために10us待つ
+//		usleep(10);
+//		*fork_idx = (philo_idx + 1) % num_of_forks;
+//		*next_fork_idx = philo_idx % num_of_forks;
+//	}
+
+	/* リソース階層による解法
+	 * 各哲学者は大きいidxのフォークを最初に取る. その後小さいidxのフォークを取る風にする.
+	 * 食後は小さいフォークを解放してから大きいidxのフォークを解放する.
+	 */
 	if (philo_idx < num_of_forks - 1)
 	{
 		*fork_idx = philo_idx + 1;
