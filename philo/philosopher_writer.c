@@ -18,4 +18,6 @@ void	write_philo_status(int philo_idx, enum e_philo_status status, long ms)
 		printf("%ld %d is thinking\n", ms, philo_no);
 	else if (status == DIED)
 		printf("%ld %d died\n", ms, philo_no);
+	else if (status == HAS_EATEN)
+		printf("%ld %d has eaten completely\n", ms, philo_no);
 }
