@@ -15,7 +15,7 @@ static void	*thr_philo_observer(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (!is_philo_still_alive(*philo->philos_info, *philo))
+		if (!is_philo_still_alive(philo->philos_info, philo))
 		{
 			philo->is_living = false;
 			write_philo_status(philo->idx, DIED, get_current_time_ms());
