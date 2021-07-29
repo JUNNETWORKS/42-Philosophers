@@ -18,19 +18,16 @@ static void	get_fork_idxes(
 	}
 	else
 	{
-		/* 哲学者の位置により右手か左手を優先する解法 */
-		if (philo_idx % 2 == 0)
+		/* リソース階層による解法 */
+		if (philo_idx < num_of_forks - 1)
 		{
-			// 哲学者が偶数なら右のフォークを先に取る
-			*fork_idx = philo_idx % num_of_forks;
-			*next_fork_idx = (philo_idx + 1) % num_of_forks;
+			*fork_idx = philo_idx + 1;
+			*next_fork_idx = philo_idx;
 		}
 		else
 		{
-			// 哲学者が奇数の場合はスプーンのmutexのブロックを防ぐために200us待つ
-			usleep(200);
-			*fork_idx = (philo_idx + 1) % num_of_forks;
-			*next_fork_idx = philo_idx % num_of_forks;
+			*fork_idx = 0;
+			*next_fork_idx = num_of_forks - 1;
 		}
 	}
 
@@ -48,7 +45,6 @@ static void	get_fork_idxes(
 // 		*fork_idx = philo_idx;
 // 		*next_fork_idx = (philo_idx + 1) % num_of_forks;
 // 	}
-
 
 // 	/* 哲学者の位置により右手か左手を優先する解法 */
 // 	if (philo_idx % 2 == 0)
