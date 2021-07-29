@@ -25,7 +25,8 @@ bool	has_philo_eaten_n_times(t_philo *philo)
 	if (philo->philos_info->must_eat_times < 0)
 		return (false);
 	pthread_mutex_lock(&philo->mux);
-	has_eaten_n_times = philo->eating_count >= philo->philos_info->must_eat_times;
+	has_eaten_n_times
+		= philo->eating_count >= philo->philos_info->must_eat_times;
 	pthread_mutex_unlock(&philo->mux);
 	return (has_eaten_n_times);
 }
@@ -40,4 +41,3 @@ bool	is_philo_still_alive(t_philo *philo)
 	pthread_mutex_unlock(&philo->mux);
 	return (rest_time_ms > 0);
 }
-
