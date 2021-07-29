@@ -34,7 +34,7 @@ static void	*thr_philo_observer(void *arg)
 			write_philo_status(philo->idx, HAS_EATEN, get_current_time_ms());
 			break ;
 		}
-		usleep(100);
+		usleep(500);
 	}
 	return ((void *)0);
 }
