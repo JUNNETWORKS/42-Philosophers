@@ -52,6 +52,7 @@ int	init_philos(t_philos_info *philos_info, t_philo *philos)
 		philos[i].idx = i;
 		philos[i].status = THINKING;
 		philos[i].eating_count = 0;
+		philos[i].last_eating_ms = get_current_time_ms();
 		philos[i].is_living = true;
 		philos[i].philos_info = philos_info;
 		if (pthread_mutex_init(&philos[i].mux, NULL))
