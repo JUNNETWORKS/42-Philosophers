@@ -18,7 +18,7 @@ static void	get_fork_idxes(
 	else
 	{
 		// 哲学者が奇数の場合はスプーンのmutexのブロックを防ぐために200us待つ
-		usleep(200);
+		usleep(20);
 		*fork_idx = (philo_idx + 1) % num_of_forks;
 		*next_fork_idx = philo_idx % num_of_forks;
 	}
@@ -65,7 +65,7 @@ int	philosopher_eat(t_philos_info *philos_info, t_philo *philo)
 	philo->status = EATING;
 	philo->last_eating_ms = get_current_time_ms();
 	pthread_mutex_unlock(&philo->mux);
-	usleep(philos_info->time_to_eat_ms * 1000);
+	usleep(philos_info->time_to_eat_ms * 990);
 	pthread_mutex_lock(&philo->mux);
 	release_forks(philos_info->forks, fork_idx, next_fork_idx);
 	philo->eating_count += 1;
@@ -79,7 +79,7 @@ int	philosopher_sleep(t_philos_info *philos_info, t_philo *philo)
 	if (is_philo_simulation_ended(philos_info, philo))
 		return (1);
 	write_philo_status(philo->idx, SLEEPING, get_current_time_ms());
-	usleep(philos_info->time_to_sleep_ms * 1000);
+	usleep(philos_info->time_to_sleep_ms * 990);
 	pthread_mutex_lock(&philo->mux);
 	philo->status = THINKING;
 	pthread_mutex_unlock(&philo->mux);
