@@ -37,9 +37,9 @@ void	release_forks(pthread_mutex_t *forks, int fork_idx1, int fork_idx2)
 		release_fork(forks, fork_idx2);
 }
 
-int	release_forks_and_rtn_err(pthread_mutex_t *forks, int fork_idx1, int fork_idx2)
+int	release_forks_and_rtn_err(pthread_mutex_t *forks,
+	int fork_idx1, int fork_idx2)
 {
 	release_forks(forks, fork_idx1, fork_idx2);
 	return (-1);
 }
-

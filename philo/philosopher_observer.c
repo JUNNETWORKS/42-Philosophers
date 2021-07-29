@@ -3,6 +3,25 @@
 #include "philosopher.h"
 #include "utils.h"
 
+static void	set_philos_simulation_end(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->mux);
+	pthread_mutex_lock(&philo->philos_info->mux);
+	philo->is_living = false;
+	philo->philos_info->end_of_simulation = true;
+	pthread_mutex_unlock(&philo->philos_info->mux);
+	pthread_mutex_unlock(&philo->mux);
+	write_philo_status(philo->idx, DIED, get_current_time_ms());
+}
+
+static void	set_philo_has_eaten_completely(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->mux);
+	philo->is_living = false;
+	pthread_mutex_unlock(&philo->mux);
+	write_philo_status(philo->idx, HAS_EATEN, get_current_time_ms());
+}
+
 /* 哲学者の死活監視スレッド
  *
  * 哲学者が死亡した時, 10msの誤差内でメッセージを出す必要があるので
@@ -18,22 +37,13 @@ static void	*thr_philo_observer(void *arg)
 		usleep(200);
 		if (!is_philo_still_alive(philo))
 		{
-			pthread_mutex_lock(&philo->mux);
-			pthread_mutex_lock(&philo->philos_info->mux);
-			philo->is_living = false;
-			philo->philos_info->end_of_simulation = true;
-			pthread_mutex_unlock(&philo->philos_info->mux);
-			pthread_mutex_unlock(&philo->mux);
-			write_philo_status(philo->idx, DIED, get_current_time_ms());
+			set_philos_simulation_end(philo);
 			break ;
 		}
 		usleep(200);
 		if (has_philo_eaten_n_times(philo))
 		{
-			pthread_mutex_lock(&philo->mux);
-			philo->is_living = false;
-			pthread_mutex_unlock(&philo->mux);
-			write_philo_status(philo->idx, HAS_EATEN, get_current_time_ms());
+			set_philo_has_eaten_completely(philo);
 			break ;
 		}
 		usleep(200);
