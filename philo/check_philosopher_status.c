@@ -8,12 +8,12 @@ bool	is_philo_simulation_ended(t_philos_info *philos_info, t_philo *philo)
 {
 	bool	is_philo_ended;
 
-	pthread_mutex_lock(&philo->mux);
 	pthread_mutex_lock(&philos_info->mux);
+	pthread_mutex_lock(&philo->mux);
 	is_philo_ended = philos_info->end_of_simulation
 		|| !philo->is_living;
-	pthread_mutex_unlock(&philos_info->mux);
 	pthread_mutex_unlock(&philo->mux);
+	pthread_mutex_unlock(&philos_info->mux);
 	return (is_philo_ended);
 }
 

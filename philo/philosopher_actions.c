@@ -107,9 +107,9 @@ int	philosopher_eat(t_philos_info *philos_info, t_philo *philo)
 	philo->status = EATING;
 	philo->last_eating_ms = get_current_time_ms();
 	pthread_mutex_unlock(&philo->mux);
-	usleep(philos_info->time_to_eat_ms * 990);
-	pthread_mutex_lock(&philo->mux);
+	usleep(philos_info->time_to_eat_ms * 1000);
 	release_forks(philos_info->forks, next_fork_idx, fork_idx);
+	pthread_mutex_lock(&philo->mux);
 	philo->eating_count += 1;
 	philo->status = SLEEPING;
 	pthread_mutex_unlock(&philo->mux);
@@ -121,7 +121,7 @@ int	philosopher_sleep(t_philos_info *philos_info, t_philo *philo)
 	if (is_philo_simulation_ended(philos_info, philo))
 		return (1);
 	write_philo_status(philo->idx, SLEEPING, get_current_time_ms());
-	usleep(philos_info->time_to_sleep_ms * 990);
+	usleep(philos_info->time_to_sleep_ms * 1000);
 	pthread_mutex_lock(&philo->mux);
 	philo->status = THINKING;
 	pthread_mutex_unlock(&philo->mux);

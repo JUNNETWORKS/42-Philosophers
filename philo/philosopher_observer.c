@@ -15,6 +15,7 @@ static void	*thr_philo_observer(void *arg)
 	philo = (t_philo *)arg;
 	while (!is_philo_simulation_ended(philo->philos_info, philo))
 	{
+		usleep(200);
 		if (!is_philo_still_alive(philo))
 		{
 			pthread_mutex_lock(&philo->mux);
@@ -26,6 +27,7 @@ static void	*thr_philo_observer(void *arg)
 			write_philo_status(philo->idx, DIED, get_current_time_ms());
 			break ;
 		}
+		usleep(200);
 		if (has_philo_eaten_n_times(philo))
 		{
 			pthread_mutex_lock(&philo->mux);
@@ -34,7 +36,7 @@ static void	*thr_philo_observer(void *arg)
 			write_philo_status(philo->idx, HAS_EATEN, get_current_time_ms());
 			break ;
 		}
-		usleep(1000);
+		usleep(200);
 	}
 	return ((void *)0);
 }
