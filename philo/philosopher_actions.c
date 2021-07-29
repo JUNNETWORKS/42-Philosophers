@@ -18,19 +18,13 @@ static void	get_fork_idxes(
 	}
 	else
 	{
-		/* リソース階層による解法 */
-		if (philo_idx < num_of_forks - 1)
+		if (philo_idx % 2 == 0)
 		{
-			*fork_idx = philo_idx + 1;
-			*next_fork_idx = philo_idx;
+			usleep(500);
 		}
-		else
-		{
-			*fork_idx = 0;
-			*next_fork_idx = num_of_forks - 1;
-		}
+		*fork_idx = philo_idx;
+		*next_fork_idx = (philo_idx + 1) % num_of_forks;
 	}
-
 
 // 	/* 0番目の哲学者のみ i+1, i の順で取る手法.
 // 	 * 0番目以外は i, i+1 の順で取る
