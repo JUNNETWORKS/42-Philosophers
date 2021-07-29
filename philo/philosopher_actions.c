@@ -121,7 +121,7 @@ int	philosopher_sleep(t_philos_info *philos_info, t_philo *philo)
 	if (is_philo_simulation_ended(philos_info, philo))
 		return (1);
 	write_philo_status(philo->idx, SLEEPING, get_current_time_ms());
-	precise_sleep_ms(philos_info->time_to_eat_ms);
+	precise_sleep_ms(philos_info->time_to_sleep_ms);
 	philo->status = THINKING;
 	if (is_philo_simulation_ended(philos_info, philo))
 		return (1);
