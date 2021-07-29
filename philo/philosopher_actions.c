@@ -122,9 +122,7 @@ int	philosopher_sleep(t_philos_info *philos_info, t_philo *philo)
 		return (1);
 	write_philo_status(philo->idx, SLEEPING, get_current_time_ms());
 	usleep(philos_info->time_to_sleep_ms * 1000);
-	pthread_mutex_lock(&philo->mux);
 	philo->status = THINKING;
-	pthread_mutex_unlock(&philo->mux);
 	if (is_philo_simulation_ended(philos_info, philo))
 		return (1);
 	write_philo_status(philo->idx, THINKING, get_current_time_ms());
