@@ -11,17 +11,11 @@ static void	get_fork_idxes(
 {
 	if (num_of_forks % 2 == 0)
 	{
-		if (philo_idx % 2 == 1)
-			usleep(200);
 		*fork_idx = philo_idx;
 		*next_fork_idx = (philo_idx + 1) % num_of_forks;
 	}
 	else
 	{
-		if (philo_idx % 2 == 0)
-		{
-			usleep(500);
-		}
 		*fork_idx = philo_idx;
 		*next_fork_idx = (philo_idx + 1) % num_of_forks;
 	}

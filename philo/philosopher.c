@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <pthread.h>
+#include <unistd.h>
 #include "philosopher.h"
 #include "utils.h"
 
@@ -37,7 +38,20 @@ int	start_philos(t_philos_info *philos_info, t_philo *philos)
 			return (-1);
 		}
 		pthread_detach(philos[i].thread);
-		i++;
+		i += 2;
+	}
+	usleep(1000);
+	i = 1;
+	while (i < philos_info->num_of_philos)
+	{
+		if (pthread_create(&philos[i].thread, NULL,
+				thr_philosopher, (void *)(philos + i)))
+		{
+			printf("pthread_create() error!\n");
+			return (-1);
+		}
+		pthread_detach(philos[i].thread);
+		i += 2;
 	}
 	return (0);
 }
