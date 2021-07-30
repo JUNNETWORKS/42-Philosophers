@@ -5,20 +5,11 @@
 #include "philosopher.h"
 #include "utils.h"
 
-/* 哲学者の人数によってどういう風にフォークを取るか変える手法 */
 static void	get_fork_idxes(
 	long num_of_forks, int *fork_idx, int *next_fork_idx, int philo_idx)
 {
-	if (num_of_forks % 2 == 0)
-	{
-		*fork_idx = philo_idx;
-		*next_fork_idx = (philo_idx + 1) % num_of_forks;
-	}
-	else
-	{
-		*fork_idx = philo_idx;
-		*next_fork_idx = (philo_idx + 1) % num_of_forks;
-	}
+	*fork_idx = philo_idx;
+	*next_fork_idx = (philo_idx + 1) % num_of_forks;
 }
 
 static int	philo_try_2_hold_forks(t_philos_info *philos_info, t_philo *philo,
