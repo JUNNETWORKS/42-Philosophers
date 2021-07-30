@@ -24,6 +24,18 @@ static void	*thr_philosopher(void *arg)
 	return ((void *)0);
 }
 
+static int	start_philo(t_philo *philo)
+{
+	if (pthread_create(&philo->thread, NULL,
+			thr_philosopher, (void *)(philo)))
+	{
+		printf("pthread_create() error!\n");
+		return (-1);
+	}
+	pthread_detach(philo->thread);
+	return (0);
+}
+
 int	start_philos(t_philos_info *philos_info, t_philo *philos)
 {
 	long	i;
@@ -31,26 +43,16 @@ int	start_philos(t_philos_info *philos_info, t_philo *philos)
 	i = 0;
 	while (i < philos_info->num_of_philos)
 	{
-		if (pthread_create(&philos[i].thread, NULL,
-				thr_philosopher, (void *)(philos + i)))
-		{
-			printf("pthread_create() error!\n");
+		if (start_philo(&philos[i]))
 			return (-1);
-		}
-		pthread_detach(philos[i].thread);
 		i += 2;
 	}
 	usleep(1000);
 	i = 1;
 	while (i < philos_info->num_of_philos)
 	{
-		if (pthread_create(&philos[i].thread, NULL,
-				thr_philosopher, (void *)(philos + i)))
-		{
-			printf("pthread_create() error!\n");
+		if (start_philo(&philos[i]))
 			return (-1);
-		}
-		pthread_detach(philos[i].thread);
 		i += 2;
 	}
 	return (0);
