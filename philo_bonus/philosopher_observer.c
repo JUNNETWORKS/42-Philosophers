@@ -31,13 +31,13 @@ int	observe_philo(t_philos_info *philos_info, t_philo *philo)
 			set_philos_simulation_end(philo);
 			return (PHILO_END_DIE);
 		}
-		usleep(200);
+		usleep(100);
 		if (has_philo_eaten_n_times(philo))
 		{
 			set_philo_has_eaten_completely(philo);
 			return (PHILO_END_EATEN);
 		}
-		usleep(200);
+		usleep(100);
 	}
 }
 
