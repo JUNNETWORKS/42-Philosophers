@@ -17,8 +17,8 @@ int	main(int argc, char **argv)
 
 	if (parse_philos_argv(argc, argv, &philos_info))
 		return (1);
-	sem_unlink(SEM_STR);
-	forks = sem_open(SEM_STR, O_CREAT | O_EXCL, S_IRWXU, philos_info.num_of_philos);
+	sem_unlink(SEM_FORKS_STR);
+	forks = sem_open(SEM_FORKS_STR, O_CREAT | O_EXCL, S_IRWXU, philos_info.num_of_philos);
 	philo_pids = malloc(sizeof(pid_t) * philos_info.num_of_philos);
 
 	if (!forks || !philo_pids)
@@ -26,6 +26,6 @@ int	main(int argc, char **argv)
 	printf("start philosopher bonus!!\n");
 	start_philos(&philos_info, philo_pids);
 	wait_philos(&philos_info, philo_pids);
-	sem_unlink(SEM_STR);
+	sem_unlink(SEM_FORKS_STR);
 	return (0);
 }

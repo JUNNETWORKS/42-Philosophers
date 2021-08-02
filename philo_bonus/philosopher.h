@@ -10,7 +10,7 @@
 # define PHILO_END_EATEN 0
 # define PHILO_END_DIE 1
 # define PHILO_END_ERR 2
-# define SEM_STR "/forks"
+# define SEM_FORKS_STR "/forks"
 
 /*
  * EATING -> THINKING -> SLEEPING -> EATING -> ...

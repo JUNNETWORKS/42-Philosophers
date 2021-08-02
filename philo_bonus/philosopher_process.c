@@ -52,7 +52,7 @@ void	philo_process(t_philos_info *philos_info, int idx)
 	philo->is_living = true;
 	philo->philos_info = philos_info;
 	philo->last_eating_ms = get_current_time_ms();
-	philos_info->forks = sem_open(SEM_STR, O_EXCL, S_IRWXU);
+	philos_info->forks = sem_open(SEM_FORKS_STR, O_EXCL, S_IRWXU);
 	if (!philos_info->forks || pthread_mutex_init(&philo->mux, NULL)
 		|| start_philo(philo))
 		exit(PHILO_END_ERR);
