@@ -2,6 +2,9 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <semaphore.h>
 #include "philosopher.h"
 #include "utils.h"
 
@@ -19,27 +22,24 @@ int	init_forks(pthread_mutex_t *forks, int fork_num)
 	return (0);
 }
 
-void	hold_fork(pthread_mutex_t *forks, int fork_idx)
+void	hold_fork(sem_t *forks)
 {
-	pthread_mutex_lock(&forks[fork_idx]);
+	sem_wait(forks);
 }
 
-void	release_fork(pthread_mutex_t *forks, int fork_idx)
+void	release_fork(sem_t *forks)
 {
-	pthread_mutex_unlock(&forks[fork_idx]);
+	sem_post(forks);
 }
 
-void	release_forks(pthread_mutex_t *forks, int fork_idx1, int fork_idx2)
+void	release_forks(sem_t *forks, int num)
 {
-	if (fork_idx1 >= 0)
-		release_fork(forks, fork_idx1);
-	if (fork_idx2 >= 0)
-		release_fork(forks, fork_idx2);
+	while (num--)
+		release_fork(forks);
 }
 
-int	release_forks_and_rtn_err(pthread_mutex_t *forks,
-	int fork_idx1, int fork_idx2)
+int	release_forks_and_rtn_err(sem_t *forks, int num)
 {
-	release_forks(forks, fork_idx1, fork_idx2);
+	release_forks(forks, num);
 	return (-1);
 }

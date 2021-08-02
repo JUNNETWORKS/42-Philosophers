@@ -6,16 +6,13 @@
 
 bool	is_philo_simulation_ended(t_philos_info *philos_info, t_philo *philo)
 {
-	bool	end_of_simulation;
 	bool	is_philo_living;
 
-	pthread_mutex_lock(&philos_info->mux);
-	end_of_simulation = philos_info->end_of_simulation;
-	pthread_mutex_unlock(&philos_info->mux);
+	(void)philos_info;
 	pthread_mutex_lock(&philo->mux);
 	is_philo_living = philo->is_living;
 	pthread_mutex_unlock(&philo->mux);
-	return (end_of_simulation || !is_philo_living);
+	return (!is_philo_living);
 }
 
 bool	has_philo_eaten_n_times(t_philo *philo)
@@ -41,3 +38,4 @@ bool	is_philo_still_alive(t_philo *philo)
 	pthread_mutex_unlock(&philo->mux);
 	return (rest_time_ms > 0);
 }
+

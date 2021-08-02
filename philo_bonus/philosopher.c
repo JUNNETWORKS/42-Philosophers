@@ -1,79 +1,63 @@
-#include <stdio.h>
-#include <pthread.h>
+#include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "philosopher.h"
 #include "utils.h"
 
-static void	*thr_philosopher(void *arg)
+static int	start_philo_process(t_philos_info *philos_info, pid_t *philo_pids, int idx)
 {
-	t_philo	*philo;
+	pid_t	pid;
 
-	philo = (t_philo *)arg;
-	pthread_mutex_lock(&philo->mux);
-	philo->status = THINKING;
-	philo->last_eating_ms = get_current_time_ms();
-	philo->eating_count = 0;
-	pthread_mutex_unlock(&philo->mux);
-	while (!is_philo_simulation_ended(philo->philos_info, philo))
-	{
-		if (philo->status == THINKING)
-			philosopher_eat(philo->philos_info, philo);
-		else if (philo->status == SLEEPING)
-			philosopher_sleep(philo->philos_info, philo);
-	}
-	return ((void *)0);
-}
-
-static int	start_philo(t_philo *philo)
-{
-	if (pthread_create(&philo->thread, NULL,
-			thr_philosopher, (void *)(philo)))
-	{
-		printf("pthread_create() error!\n");
+	pid = fork();
+	if (pid < 0)
 		return (-1);
-	}
-	pthread_detach(philo->thread);
+	else if (pid == 0)
+		philo_process(philos_info, idx);
+	philo_pids[idx] = pid;
 	return (0);
 }
 
-int	start_philos(t_philos_info *philos_info, t_philo *philos)
+int		start_philos(t_philos_info *philos_info, pid_t *philo_pids)
 {
-	long	i;
+	int		i;
 
 	i = 0;
 	while (i < philos_info->num_of_philos)
 	{
-		if (start_philo(&philos[i]))
+		if (start_philo_process(philos_info, philo_pids, i))
 			return (-1);
 		i += 2;
 	}
-	usleep(1000);
+	usleep(200);
 	i = 1;
 	while (i < philos_info->num_of_philos)
 	{
-		if (start_philo(&philos[i]))
+		if (start_philo_process(philos_info, philo_pids, i))
 			return (-1);
 		i += 2;
 	}
 	return (0);
 }
 
-int	init_philos(t_philos_info *philos_info, t_philo *philos)
+int		wait_philos(t_philos_info *philos_info, pid_t *philo_pids)
 {
-	long	i;
+	int		exit_status;
+	int		philo_num;
 
-	i = 0;
-	while (i < philos_info->num_of_philos)
+	(void)philo_pids;
+	philo_num = philos_info->num_of_philos;
+	while (philo_num--)
 	{
-		philos[i].idx = i;
-		philos[i].status = THINKING;
-		philos[i].eating_count = 0;
-		philos[i].last_eating_ms = get_current_time_ms();
-		philos[i].is_living = true;
-		philos[i].philos_info = philos_info;
-		if (pthread_mutex_init(&philos[i].mux, NULL))
-			return (1);
-		i++;
+		waitpid(0, &exit_status, 0);
+		exit_status = WEXITSTATUS(exit_status);
+		if (exit_status == PHILO_END_DIE || exit_status == PHILO_END_ERR)
+		{
+			kill(0, SIGTERM);
+			break ;
+		}
 	}
+	while (philo_num--)
+		waitpid(0, NULL, 0);
 	return (0);
 }
