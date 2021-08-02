@@ -2,3 +2,4 @@
 *.o
 *.d
 /philo/philo
+/philo_bonus/philo
