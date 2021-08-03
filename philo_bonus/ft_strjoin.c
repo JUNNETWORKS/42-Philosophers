@@ -19,4 +19,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	*str = '\0';
 	return (ans);
 }
-

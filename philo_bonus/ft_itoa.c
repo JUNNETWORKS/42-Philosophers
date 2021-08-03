@@ -15,7 +15,6 @@ int	get_digit(int n)
 	return (digit);
 }
 
-
 int	itoa_recursive(char *result, int n)
 {
 	int	idx;
@@ -48,4 +47,3 @@ char	*ft_itoa(int n)
 	itoa_recursive(result, n);
 	return (result);
 }
-
