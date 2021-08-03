@@ -1,4 +1,4 @@
-NAME := philo
+NAME := philo_bonus
 CC := gcc
 CFLAGS := -Werror -Wall -Wextra
 CFLAGS += -g -fsanitize=thread
