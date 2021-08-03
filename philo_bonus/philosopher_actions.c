@@ -24,24 +24,20 @@ static int	philo_try_2_hold_forks(t_philos_info *philos_info, t_philo *philo)
 	return (0);
 }
 
-/* リソース階層による解法
- * 各哲学者は大きいidxのフォークを最初に取る. その後小さいidxのフォークを取る風にする.
- * 食後は小さいフォークを解放してから大きいidxのフォークを解放する.
- */
 int	philosopher_eat(t_philos_info *philos_info, t_philo *philo)
 {
 	if (philo_try_2_hold_forks(philos_info, philo))
 		return (-1);
-	pthread_mutex_lock(&philo->mux);
+	sem_wait(philo->sem);
 	philo->status = EATING;
 	philo->last_eating_ms = get_current_time_ms();
-	pthread_mutex_unlock(&philo->mux);
+	sem_post(philo->sem);
 	precise_sleep_ms(philos_info->time_to_eat_ms);
 	release_forks(philos_info->forks, 2);
-	pthread_mutex_lock(&philo->mux);
+	sem_wait(philo->sem);
 	philo->eating_count += 1;
 	philo->status = SLEEPING;
-	pthread_mutex_unlock(&philo->mux);
+	sem_post(philo->sem);
 	return (0);
 }
 

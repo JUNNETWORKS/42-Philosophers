@@ -14,16 +14,16 @@ static void	set_philos_simulation_end(t_philo *philo)
 	has_died = sem_open(SEM_HAS_DIED_STR, O_EXCL, S_IRWXU);
 	sem_post(has_died);
 	sem_close(has_died);
-	pthread_mutex_lock(&philo->mux);
+	sem_wait(philo->sem);
 	philo->is_living = false;
-	pthread_mutex_unlock(&philo->mux);
+	sem_post(philo->sem);
 }
 
 static void	set_philo_has_eaten_completely(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->mux);
+	sem_wait(philo->sem);
 	philo->is_living = false;
-	pthread_mutex_unlock(&philo->mux);
+	sem_post(philo->sem);
 	write_philo_status(philo->idx, HAS_EATEN, get_current_time_ms());
 }
 

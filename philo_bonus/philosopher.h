@@ -41,7 +41,7 @@ typedef struct s_philo {
 	long				last_eating_ms;
 	int					eating_count;
 	bool				is_living;
-	pthread_mutex_t		mux;
+	sem_t				*sem;
 	pthread_t			thread;
 	t_philos_info		*philos_info;
 }	t_philo;

@@ -8,20 +8,6 @@
 #include "philosopher.h"
 #include "utils.h"
 
-int	init_forks(pthread_mutex_t *forks, int fork_num)
-{
-	int	i;
-
-	i = 0;
-	while (i < fork_num)
-	{
-		if (pthread_mutex_init(&forks[i], NULL))
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
 void	hold_fork(sem_t *forks)
 {
 	sem_wait(forks);
