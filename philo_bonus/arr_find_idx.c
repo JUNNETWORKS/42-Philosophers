@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include <wait.h>
+#include <sys/wait.h>
 #include "utils.h"
 
 int	arr_find_pid(pid_t *arr, pid_t value, int len)
