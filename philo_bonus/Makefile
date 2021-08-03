@@ -15,7 +15,7 @@ DEPS_DIR := deps
 
 SRCS := main.c \
   philosopher.c philosopher_actions.c parse_philos_argv.c philosopher_writer.c \
-  philosopher_process.c philosopher_observer.c check_philosopher_status.c \
+  philosopher_process.c philosopher_observer.c check_philosopher_status.c  wait_philosophers.c \
   fork.c ft_atol.c ft_isdigit.c ft_strncmp.c get_current_time_ms.c precise_sleep_ms.c arr_find_idx.c
 OBJS := $(addprefix $(OBJS_DIR)/, ${SRCS:.c=.o})
 DEPS := $(addprefix $(DEPS_DIR)/, ${SRCS:.c=.d})

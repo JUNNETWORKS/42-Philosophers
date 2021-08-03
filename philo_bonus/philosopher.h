@@ -11,6 +11,7 @@
 # define PHILO_END_DIE 1
 # define PHILO_END_ERR 2
 # define SEM_FORKS_STR "/forks"
+# define SEM_HAS_DIED_STR "/has_died"
 
 /*
  * EATING -> THINKING -> SLEEPING -> EATING -> ...
@@ -31,6 +32,7 @@ typedef struct s_philos_info {
 	long			time_to_sleep_ms;
 	long			must_eat_times;
 	sem_t			*forks;
+	pid_t			*philo_pids;
 }	t_philos_info;
 
 typedef struct s_philo {
