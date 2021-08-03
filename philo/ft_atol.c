@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include "utils.h"
 
-static int	num_len(const char *str)
+static long	num_len(const char *str)
 {
-	int	i;
+	long	i;
 
 	i = 0;
 	while (ft_isdigit(*str++))
@@ -11,7 +11,7 @@ static int	num_len(const char *str)
 	return (i);
 }
 
-static long	is_long_overflow(const char *nptr, int sign)
+static long	is_long_overflow(const char *nptr, long sign)
 {
 	if (num_len(nptr) > 10)
 		return (true);
@@ -25,7 +25,7 @@ static long	is_long_overflow(const char *nptr, int sign)
 	return (false);
 }
 
-int	ft_atol(const char *nptr, long *num)
+long	ft_atol(const char *nptr, long *num)
 {
 	unsigned long	tmp;
 	long			np;
@@ -42,6 +42,6 @@ int	ft_atol(const char *nptr, long *num)
 		return (-1);
 	while (ft_isdigit(*nptr))
 		tmp = tmp * 10 + (*nptr++ - '0');
-	*num = (int)(np * tmp);
+	*num = np * tmp;
 	return (0);
 }

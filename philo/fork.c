@@ -5,9 +5,9 @@
 #include "philosopher.h"
 #include "utils.h"
 
-int	init_forks(pthread_mutex_t *forks, int fork_num)
+int	init_forks(pthread_mutex_t *forks, long fork_num)
 {
-	int	i;
+	long	i;
 
 	i = 0;
 	while (i < fork_num)
@@ -19,17 +19,17 @@ int	init_forks(pthread_mutex_t *forks, int fork_num)
 	return (0);
 }
 
-void	hold_fork(pthread_mutex_t *forks, int fork_idx)
+void	hold_fork(pthread_mutex_t *forks, long fork_idx)
 {
 	pthread_mutex_lock(&forks[fork_idx]);
 }
 
-void	release_fork(pthread_mutex_t *forks, int fork_idx)
+void	release_fork(pthread_mutex_t *forks, long fork_idx)
 {
 	pthread_mutex_unlock(&forks[fork_idx]);
 }
 
-void	release_forks(pthread_mutex_t *forks, int fork_idx1, int fork_idx2)
+void	release_forks(pthread_mutex_t *forks, long fork_idx1, long fork_idx2)
 {
 	if (fork_idx1 >= 0)
 		release_fork(forks, fork_idx1);
@@ -38,7 +38,7 @@ void	release_forks(pthread_mutex_t *forks, int fork_idx1, int fork_idx2)
 }
 
 int	release_forks_and_rtn_err(pthread_mutex_t *forks,
-	int fork_idx1, int fork_idx2)
+	long fork_idx1, long fork_idx2)
 {
 	release_forks(forks, fork_idx1, fork_idx2);
 	return (-1);

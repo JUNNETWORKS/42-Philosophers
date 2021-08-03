@@ -6,14 +6,14 @@
 #include "utils.h"
 
 static void	get_fork_idxes(
-	long num_of_forks, int *fork_idx, int *next_fork_idx, int philo_idx)
+	long num_of_forks, long *fork_idx, long *next_fork_idx, long philo_idx)
 {
 	*fork_idx = philo_idx;
 	*next_fork_idx = (philo_idx + 1) % num_of_forks;
 }
 
 static int	philo_try_2_hold_forks(t_philos_info *philos_info, t_philo *philo,
-	int fork_idx, int next_fork_idx)
+	long fork_idx, long next_fork_idx)
 {
 	hold_fork(philos_info->forks, fork_idx);
 	if (is_philo_simulation_ended(philos_info, philo))
@@ -37,8 +37,8 @@ static int	philo_try_2_hold_forks(t_philos_info *philos_info, t_philo *philo,
  */
 int	philosopher_eat(t_philos_info *philos_info, t_philo *philo)
 {
-	int	fork_idx;
-	int	next_fork_idx;
+	long	fork_idx;
+	long	next_fork_idx;
 
 	get_fork_idxes(philo->philos_info->num_of_philos,
 		&fork_idx, &next_fork_idx, philo->idx);
