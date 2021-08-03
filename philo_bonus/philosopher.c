@@ -5,7 +5,7 @@
 #include "philosopher.h"
 #include "utils.h"
 
-static int	start_philo_process(t_philos_info *philos_info, pid_t *philo_pids, int idx)
+static int	start_philo_process(t_philos_info *philos_info, int idx)
 {
 	pid_t	pid;
 
@@ -14,18 +14,18 @@ static int	start_philo_process(t_philos_info *philos_info, pid_t *philo_pids, in
 		return (-1);
 	else if (pid == 0)
 		philo_process(philos_info, idx);
-	philo_pids[idx] = pid;
+	philos_info->philo_pids[idx] = pid;
 	return (0);
 }
 
-int		start_philos(t_philos_info *philos_info, pid_t *philo_pids)
+int	start_philos(t_philos_info *philos_info)
 {
 	int		i;
 
 	i = 0;
 	while (i < philos_info->num_of_philos)
 	{
-		if (start_philo_process(philos_info, philo_pids, i))
+		if (start_philo_process(philos_info, i))
 			return (-1);
 		i += 2;
 	}
@@ -33,7 +33,7 @@ int		start_philos(t_philos_info *philos_info, pid_t *philo_pids)
 	i = 1;
 	while (i < philos_info->num_of_philos)
 	{
-		if (start_philo_process(philos_info, philo_pids, i))
+		if (start_philo_process(philos_info, i))
 			return (-1);
 		i += 2;
 	}

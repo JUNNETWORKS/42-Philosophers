@@ -48,4 +48,3 @@ int	observe_philo(t_philos_info *philos_info, t_philo *philo)
 		usleep(100);
 	}
 }
-

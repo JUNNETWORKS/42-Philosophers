@@ -10,8 +10,8 @@ int	arr_find_pid(pid_t *arr, pid_t value, int len)
 	while (i < len)
 	{
 		if (arr[i] == value)
-			return i;
+			return (i);
 		i++;
 	}
-	return -1;
+	return (-1);
 }

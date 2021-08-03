@@ -48,8 +48,8 @@ typedef struct s_philo {
 
 // main process
 int		parse_philos_argv(int argc, char **argv, t_philos_info *philos_info);
-int		start_philos(t_philos_info *philos_info, pid_t *philo_pids);
-int		wait_philos(t_philos_info *philos_info, pid_t *philo_pids);
+int		start_philos(t_philos_info *philos_info);
+int		wait_philos(t_philos_info *philos_info);
 // philosopher process
 void	philo_process(t_philos_info *philos_info, int idx);
 int		philosopher_eat(t_philos_info *philos_info, t_philo *philo);
@@ -59,7 +59,7 @@ bool	is_philo_still_alive(t_philo *philo);
 bool	has_philo_eaten_n_times(t_philo *philo);
 void	write_philo_status(int philo_idx, enum e_philo_status status, long ms);
 // observer
-int	observe_philo(t_philos_info *philos_info, t_philo *philo);
+int		observe_philo(t_philos_info *philos_info, t_philo *philo);
 // fork
 void	hold_fork(sem_t *forks);
 void	release_fork(sem_t *forks);

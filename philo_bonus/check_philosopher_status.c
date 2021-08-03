@@ -38,4 +38,3 @@ bool	is_philo_still_alive(t_philo *philo)
 	pthread_mutex_unlock(&philo->mux);
 	return (rest_time_ms > 0);
 }
-
