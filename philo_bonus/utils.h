@@ -13,6 +13,6 @@ void	*ft_calloc(size_t nmemb, size_t size);
 void	*free_and_rtn_null(void *ptr);
 long	get_current_time_ms(void);
 void	precise_sleep_ms(long ms);
-long		arr_find_pid(pid_t *arr, pid_t value, long len);
+long	arr_find_pid(pid_t *arr, pid_t value, long len);
 
 #endif

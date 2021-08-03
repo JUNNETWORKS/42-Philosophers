@@ -35,8 +35,8 @@ long	itoa_recursive(char *result, long n)
 
 char	*ft_ltoa(long n)
 {
-	long			arr_size;
-	char		*result;
+	long	arr_size;
+	char	*result;
 
 	arr_size = get_digit(n) + 1;
 	if (n < 0)
