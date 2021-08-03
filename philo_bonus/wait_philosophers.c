@@ -15,7 +15,7 @@ static void	*thr_observe_has_philo_died(void *arg)
 {
 	sem_t			*has_died;
 	t_philos_info	*philos_info;
-	int				i;
+	long			i;
 
 	philos_info = (t_philos_info *)arg;
 	has_died = sem_open(SEM_HAS_DIED_STR, O_EXCL, S_IRWXU);
@@ -43,7 +43,7 @@ static int	start_philos_observer(t_philos_info *philos_info)
 int	wait_philos(t_philos_info *philos_info)
 {
 	int		exit_status;
-	int		philo_num;
+	long	philo_num;
 
 	if (start_philos_observer(philos_info))
 		return (-1);

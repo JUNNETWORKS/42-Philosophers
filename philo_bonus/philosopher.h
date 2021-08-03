@@ -39,7 +39,7 @@ typedef struct s_philo {
 	long				idx;
 	enum e_philo_status	status;
 	long				last_eating_ms;
-	int					eating_count;
+	long				eating_count;
 	bool				is_living;
 	sem_t				*sem;
 	pthread_t			thread;
@@ -51,19 +51,19 @@ int		parse_philos_argv(int argc, char **argv, t_philos_info *philos_info);
 int		start_philos(t_philos_info *philos_info);
 int		wait_philos(t_philos_info *philos_info);
 // philosopher process
-void	philo_process(t_philos_info *philos_info, int idx);
+void	philo_process(t_philos_info *philos_info, long idx);
 int		philosopher_eat(t_philos_info *philos_info, t_philo *philo);
 int		philosopher_sleep(t_philos_info *philos_info, t_philo *philo);
 bool	is_philo_simulation_ended(t_philos_info *philos_info, t_philo *philo);
 bool	is_philo_still_alive(t_philo *philo);
 bool	has_philo_eaten_n_times(t_philo *philo);
-void	write_philo_status(int philo_idx, enum e_philo_status status, long ms);
+void	write_philo_status(long philo_idx, enum e_philo_status status, long ms);
 // observer
 int		observe_philo(t_philos_info *philos_info, t_philo *philo);
 // fork
 void	hold_fork(sem_t *forks);
 void	release_fork(sem_t *forks);
-void	release_forks(sem_t *forks, int num);
-int		release_forks_and_rtn_err(sem_t *forks, int num);
+void	release_forks(sem_t *forks, long num);
+int		release_forks_and_rtn_err(sem_t *forks, long num);
 
 #endif

@@ -1,8 +1,8 @@
 #include "utils.h"
 
-int	get_digit(int n)
+long	get_digit(long n)
 {
-	int		digit;
+	long		digit;
 
 	if (n == 0)
 		return (1);
@@ -15,10 +15,10 @@ int	get_digit(int n)
 	return (digit);
 }
 
-int	itoa_recursive(char *result, int n)
+long	itoa_recursive(char *result, long n)
 {
-	int	idx;
-	int	sign;
+	long	idx;
+	long	sign;
 
 	idx = 0;
 	sign = 1;
@@ -33,9 +33,9 @@ int	itoa_recursive(char *result, int n)
 	return (idx);
 }
 
-char	*ft_itoa(int n)
+char	*ft_ltoa(long n)
 {
-	int			arr_size;
+	long			arr_size;
 	char		*result;
 
 	arr_size = get_digit(n) + 1;

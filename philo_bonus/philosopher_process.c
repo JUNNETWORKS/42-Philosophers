@@ -39,12 +39,12 @@ static int	start_philo(t_philo *philo)
 	return (0);
 }
 
-static char	*get_sem_str(int idx)
+static char	*get_sem_str(long idx)
 {
 	char	*idx_str;
 	char	*sem_str;
 
-	idx_str = ft_itoa(idx);
+	idx_str = ft_ltoa(idx);
 	if (!idx_str)
 		return (NULL);
 	sem_str = ft_strjoin("/philo_", idx_str);
@@ -54,7 +54,7 @@ static char	*get_sem_str(int idx)
 	return (sem_str);
 }
 
-static t_philo	*generate_philo(t_philos_info *philos_info, int idx)
+static t_philo	*generate_philo(t_philos_info *philos_info, long idx)
 {
 	t_philo		*philo;
 	char		*sem_str;
@@ -79,7 +79,7 @@ static t_philo	*generate_philo(t_philos_info *philos_info, int idx)
 	return (philo);
 }
 
-void	philo_process(t_philos_info *philos_info, int idx)
+void	philo_process(t_philos_info *philos_info, long idx)
 {
 	t_philo		*philo;
 

@@ -5,7 +5,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char			*str;
 	char			*ans;
-	unsigned int	total_len;
+	unsigned long	total_len;
 
 	total_len = ft_strlen(s1) + ft_strlen(s2);
 	str = malloc(total_len + 1);

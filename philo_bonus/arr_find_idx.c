@@ -2,9 +2,9 @@
 #include <sys/wait.h>
 #include "utils.h"
 
-int	arr_find_pid(pid_t *arr, pid_t value, int len)
+long	arr_find_pid(pid_t *arr, pid_t value, long len)
 {
-	int	i;
+	long	i;
 
 	i = 0;
 	while (i < len)

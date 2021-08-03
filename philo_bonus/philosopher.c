@@ -5,7 +5,7 @@
 #include "philosopher.h"
 #include "utils.h"
 
-static int	start_philo_process(t_philos_info *philos_info, int idx)
+static int	start_philo_process(t_philos_info *philos_info, long idx)
 {
 	pid_t	pid;
 
@@ -20,7 +20,7 @@ static int	start_philo_process(t_philos_info *philos_info, int idx)
 
 int	start_philos(t_philos_info *philos_info)
 {
-	int		i;
+	long		i;
 
 	i = 0;
 	while (i < philos_info->num_of_philos)

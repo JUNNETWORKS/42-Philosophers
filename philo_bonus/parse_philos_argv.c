@@ -12,7 +12,7 @@ static int	print_err_msg_and_rtn(void)
 
 int	parse_philos_argv(int argc, char **argv, t_philos_info *philos_info)
 {
-	int	error;
+	long	error;
 
 	if (argc < 5)
 		return (print_err_msg_and_rtn());

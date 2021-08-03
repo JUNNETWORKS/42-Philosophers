@@ -3,21 +3,21 @@
 #include "utils.h"
 
 /* {timestamp_in_ms} {philo_no} {status_msg} */
-void	write_philo_status(int philo_idx, enum e_philo_status status, long ms)
+void	write_philo_status(long philo_idx, enum e_philo_status status, long ms)
 {
-	int		philo_no;
+	long		philo_no;
 
 	philo_no = philo_idx + 1;
 	if (status == HAS_TAKEN_A_FORK)
-		printf("%ld %d has taken a fork\n", ms, philo_no);
+		printf("%ld %ld has taken a fork\n", ms, philo_no);
 	else if (status == EATING)
-		printf("%ld %d is eating\n", ms, philo_no);
+		printf("%ld %ld is eating\n", ms, philo_no);
 	else if (status == SLEEPING)
-		printf("%ld %d is sleeping\n", ms, philo_no);
+		printf("%ld %ld is sleeping\n", ms, philo_no);
 	else if (status == THINKING)
-		printf("%ld %d is thinking\n", ms, philo_no);
+		printf("%ld %ld is thinking\n", ms, philo_no);
 	else if (status == DIED)
-		printf("%ld %d died\n", ms, philo_no);
+		printf("%ld %ld died\n", ms, philo_no);
 	else if (status == HAS_EATEN)
-		printf("%ld %d has eaten completely\n", ms, philo_no);
+		printf("%ld %ld has eaten completely\n", ms, philo_no);
 }
