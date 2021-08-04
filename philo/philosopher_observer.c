@@ -11,7 +11,7 @@ static void	set_philos_simulation_end(t_philo *philo)
 	philo->philos_info->end_of_simulation = true;
 	pthread_mutex_unlock(&philo->philos_info->mux);
 	pthread_mutex_unlock(&philo->mux);
-	write_philo_status(philo->idx, DIED, get_current_time_ms());
+	write_philo_status(philo->idx, DIED);
 }
 
 static void	set_philo_has_eaten_completely(t_philo *philo)
@@ -19,7 +19,7 @@ static void	set_philo_has_eaten_completely(t_philo *philo)
 	pthread_mutex_lock(&philo->mux);
 	philo->is_living = false;
 	pthread_mutex_unlock(&philo->mux);
-	write_philo_status(philo->idx, HAS_EATEN, get_current_time_ms());
+	write_philo_status(philo->idx, HAS_EATEN);
 }
 
 /* 哲学者の死活監視スレッド

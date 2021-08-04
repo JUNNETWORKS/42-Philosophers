@@ -47,7 +47,7 @@ bool	is_philo_still_alive(t_philo *philo);
 bool	has_philo_eaten_n_times(t_philo *philo);
 int		philosopher_eat(t_philos_info *philos_info, t_philo *philo);
 int		philosopher_sleep(t_philos_info *philos_info, t_philo *philo);
-void	write_philo_status(long philo_idx, enum e_philo_status status, long ms);
+void	write_philo_status(long philo_idx, enum e_philo_status status);
 // philosopher observer
 int		start_philo_observers(t_philos_info *philos_info,
 			t_philo *philos, pthread_t *philo_observers);
