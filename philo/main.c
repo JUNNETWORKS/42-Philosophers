@@ -6,16 +6,11 @@
 #include "philosopher.h"
 #include "utils.h"
 
-pthread_mutex_t writing_mux;
-
 int	main(int argc, char **argv)
 {
 	pthread_t		*philo_observers;
 	t_philos_info	*philos_info;
 	t_philo			*philos;
-
-	// テスト用
-	pthread_mutex_init(&writing_mux, NULL);
 
 	philos_info = malloc(sizeof(t_philos_info));
 	if (!philos_info || parse_philos_argv(argc, argv, philos_info))
@@ -28,6 +23,7 @@ int	main(int argc, char **argv)
 			sizeof(pthread_t) * philos_info->num_of_philos);
 	if (!philos || !philos_info->forks || !philo_observers
 		|| pthread_mutex_init(&philos_info->mux, NULL)
+		|| pthread_mutex_init(&philos_info->writing_mux, NULL)
 		|| init_forks(philos_info->forks, philos_info->num_of_philos)
 		|| init_philos(philos_info, philos)
 		|| start_philos(philos_info, philos)

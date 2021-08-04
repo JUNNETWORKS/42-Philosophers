@@ -39,10 +39,10 @@ static void	*thr_philo_observer(void *arg)
 				pthread_mutex_lock(&philo->philos_info->mux);
 				philo->philos_info->end_of_simulation = true;
 				pthread_mutex_unlock(&philo->philos_info->mux);
-				write_philo_status(philo->idx, DIED);
+				write_philo_status(&philo->philos_info->writing_mux, philo->idx, DIED);
 			}
 			else
-				write_philo_status(philo->idx, HAS_EATEN);
+				write_philo_status(&philo->philos_info->writing_mux, philo->idx, HAS_EATEN);
 			pthread_mutex_unlock(&philo->mux);
 			break ;
 		}

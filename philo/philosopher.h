@@ -4,9 +4,6 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-// テスト用
-extern pthread_mutex_t writing_mux;
-
 /*
  * EATING -> THINKING -> SLEEPING -> EATING -> ...
  */
@@ -28,6 +25,7 @@ typedef struct s_philos_info {
 	long			must_eat_times;
 	bool			end_of_simulation;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	writing_mux;
 }	t_philos_info;
 
 typedef struct s_philo {
@@ -50,7 +48,8 @@ bool	is_philo_still_alive(t_philo *philo);
 bool	has_philo_eaten_n_times(t_philo *philo);
 int		philosopher_eat(t_philos_info *philos_info, t_philo *philo);
 int		philosopher_sleep(t_philos_info *philos_info, t_philo *philo);
-void	write_philo_status(long philo_idx, enum e_philo_status status);
+void	write_philo_status(pthread_mutex_t *writing_mux,
+			long philo_idx, enum e_philo_status status);
 // philosopher observer
 int		start_philo_observers(t_philos_info *philos_info,
 			t_philo *philos, pthread_t *philo_observers);
