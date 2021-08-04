@@ -30,10 +30,13 @@ static void	*thr_philo_observer(void *arg)
 			= philo->eating_count >= philo->philos_info->must_eat_times;
 		rest_time_ms = philo->philos_info->time_to_die_ms
 			- (get_current_time_ms() - philo->last_eating_ms);
+		pthread_mutex_unlock(&philo->mux);
 		if ((philo->philos_info->must_eat_times >= 0 && has_eaten_n_times)
 			|| rest_time_ms <= 0)
 		{
+			pthread_mutex_lock(&philo->mux);
 			philo->is_living = false;
+			pthread_mutex_unlock(&philo->mux);
 			if (rest_time_ms <= 0)
 			{
 				pthread_mutex_lock(&philo->philos_info->mux);
@@ -43,10 +46,8 @@ static void	*thr_philo_observer(void *arg)
 			}
 			else
 				write_philo_status(&philo->philos_info->writing_mux, philo->idx, HAS_EATEN);
-			pthread_mutex_unlock(&philo->mux);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->mux);
 	}
 	return ((void *)0);
 }
