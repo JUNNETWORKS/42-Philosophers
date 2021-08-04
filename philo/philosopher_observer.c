@@ -65,6 +65,7 @@ int	start_philo_observers(t_philos_info *philos_info,
 			printf("pthread_create() error!\n");
 			return (-1);
 		}
+		pthread_detach(philo_observers[i]);
 		i++;
 	}
 	return (0);
@@ -72,10 +73,16 @@ int	start_philo_observers(t_philos_info *philos_info,
 
 int	wait_philo_observers(t_philos_info *philos_info, pthread_t *philo_observers)
 {
-	long	i;
+	bool end_of_simulation;
 
-	i = 0;
-	while (i < philos_info->num_of_philos)
-		pthread_join(philo_observers[i++], NULL);
+	(void)philo_observers;
+	end_of_simulation = false;
+	while (!end_of_simulation)
+	{
+		pthread_mutex_lock(&philos_info->mux);
+		end_of_simulation = philos_info->end_of_simulation;
+		pthread_mutex_unlock(&philos_info->mux);
+		usleep(200);
+	}
 	return (0);
 }
