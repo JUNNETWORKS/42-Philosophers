@@ -29,6 +29,6 @@ int	main(int argc, char **argv)
 		|| start_philos(philos_info, philos)
 		|| start_philo_observers(philos_info, philos, philo_observers))
 		return (1);
-	wait_philo_observers(philos_info, philos, philo_observers);
+	wait_philo_observers(philos_info, philos);
 	return (0);
 }

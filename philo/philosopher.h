@@ -33,7 +33,6 @@ typedef struct s_philo {
 	enum e_philo_status	status;
 	long				last_eating_ms;
 	long				eating_count;
-	bool				is_living;
 	pthread_mutex_t		mux;
 	pthread_t			thread;
 	t_philos_info		*philos_info;
@@ -43,7 +42,7 @@ int		parse_philos_argv(int argc, char **argv, t_philos_info *philos_info);
 int		init_philos(t_philos_info *philos_info, t_philo *philos);
 int		start_philos(t_philos_info *philos_info, t_philo *philos);
 int		monitor_if_philosophers_are_living(void);
-bool	is_philo_simulation_ended(t_philos_info *philos_info, t_philo *philo);
+bool	is_philo_simulation_ended(t_philos_info *philos_info);
 bool	is_philo_still_alive(t_philo *philo);
 bool	has_philo_eaten_n_times(t_philo *philo);
 int		philosopher_eat(t_philos_info *philos_info, t_philo *philo);
@@ -54,7 +53,7 @@ void	write_philo_status(pthread_mutex_t *writing_mux,
 int		start_philo_observers(t_philos_info *philos_info,
 			t_philo *philos, pthread_t *philo_observers);
 int	wait_philo_observers(t_philos_info *philos_info,
-			t_philo *philos, pthread_t *philo_observers);
+			t_philo *philos);
 // fork
 int		init_forks(pthread_mutex_t *forks, long fork_num);
 void	hold_fork(pthread_mutex_t *forks, long fork_idx);

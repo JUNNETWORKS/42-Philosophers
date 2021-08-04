@@ -16,15 +16,15 @@ static int	philo_try_2_hold_forks(t_philos_info *philos_info, t_philo *philo,
 	long fork_idx, long next_fork_idx)
 {
 	hold_fork(philos_info->forks, fork_idx);
-	if (is_philo_simulation_ended(philos_info, philo))
+	if (is_philo_simulation_ended(philos_info))
 		return (release_forks_and_rtn_err(philos_info->forks, fork_idx, -1));
 	write_philo_status(&philos_info->writing_mux, philo->idx, HAS_TAKEN_A_FORK);
 	hold_fork(philos_info->forks, next_fork_idx);
-	if (is_philo_simulation_ended(philos_info, philo))
+	if (is_philo_simulation_ended(philos_info))
 		return (release_forks_and_rtn_err(philos_info->forks,
 				next_fork_idx, fork_idx));
 	write_philo_status(&philos_info->writing_mux, philo->idx, HAS_TAKEN_A_FORK);
-	if (is_philo_simulation_ended(philos_info, philo))
+	if (is_philo_simulation_ended(philos_info))
 		return (release_forks_and_rtn_err(philos_info->forks,
 				next_fork_idx, fork_idx));
 	write_philo_status(&philos_info->writing_mux, philo->idx, EATING);
@@ -59,12 +59,12 @@ int	philosopher_eat(t_philos_info *philos_info, t_philo *philo)
 
 int	philosopher_sleep(t_philos_info *philos_info, t_philo *philo)
 {
-	if (is_philo_simulation_ended(philos_info, philo))
+	if (is_philo_simulation_ended(philos_info))
 		return (1);
 	write_philo_status(&philos_info->writing_mux, philo->idx, SLEEPING);
 	precise_sleep_ms(philos_info->time_to_sleep_ms);
 	philo->status = THINKING;
-	if (is_philo_simulation_ended(philos_info, philo))
+	if (is_philo_simulation_ended(philos_info))
 		return (1);
 	write_philo_status(&philos_info->writing_mux, philo->idx, THINKING);
 	return (0);

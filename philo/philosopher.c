@@ -14,7 +14,7 @@ static void	*thr_philosopher(void *arg)
 	philo->last_eating_ms = get_current_time_ms();
 	philo->eating_count = 0;
 	pthread_mutex_unlock(&philo->mux);
-	while (!is_philo_simulation_ended(philo->philos_info, philo))
+	while (!is_philo_simulation_ended(philo->philos_info))
 	{
 		if (philo->status == THINKING)
 			philosopher_eat(philo->philos_info, philo);
@@ -27,7 +27,7 @@ static void	*thr_philosopher(void *arg)
 static int	start_philo(t_philo *philo)
 {
 	if (philo->idx % 2 == 1)
-		usleep(1000);
+		usleep(200);
 	if (pthread_create(&philo->thread, NULL,
 			thr_philosopher, (void *)(philo)))
 	{
@@ -63,7 +63,6 @@ int	init_philos(t_philos_info *philos_info, t_philo *philos)
 		philos[i].status = THINKING;
 		philos[i].eating_count = 0;
 		philos[i].last_eating_ms = get_current_time_ms();
-		philos[i].is_living = true;
 		philos[i].philos_info = philos_info;
 		if (pthread_mutex_init(&philos[i].mux, NULL))
 			return (1);
