@@ -9,11 +9,11 @@ bool	is_philo_simulation_ended(t_philos_info *philos_info, t_philo *philo)
 	bool	end_of_simulation;
 	bool	is_philo_living;
 
-	pthread_mutex_lock(&philo->mux);
 	pthread_mutex_lock(&philos_info->mux);
 	end_of_simulation = philos_info->end_of_simulation;
-	is_philo_living = philo->is_living;
 	pthread_mutex_unlock(&philos_info->mux);
+	pthread_mutex_lock(&philo->mux);
+	is_philo_living = philo->is_living;
 	pthread_mutex_unlock(&philo->mux);
 	return (end_of_simulation || !is_philo_living);
 }
