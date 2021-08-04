@@ -30,7 +30,8 @@ static void	*thr_philo_observer(void *arg)
 			= philo->eating_count >= philo->philos_info->must_eat_times;
 		rest_time_ms = philo->philos_info->time_to_die_ms
 			- (get_current_time_ms() - philo->last_eating_ms);
-		if (has_eaten_n_times || rest_time_ms <= 0)
+		if ((philo->philos_info->must_eat_times >= 0 && has_eaten_n_times)
+			|| rest_time_ms <= 0)
 		{
 			philo->is_living = false;
 			if (rest_time_ms <= 0)
