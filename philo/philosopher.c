@@ -26,6 +26,8 @@ static void	*thr_philosopher(void *arg)
 
 static int	start_philo(t_philo *philo)
 {
+	if (philo->idx % 2 == 1)
+		usleep(1000);
 	if (pthread_create(&philo->thread, NULL,
 			thr_philosopher, (void *)(philo)))
 	{
@@ -45,15 +47,7 @@ int	start_philos(t_philos_info *philos_info, t_philo *philos)
 	{
 		if (start_philo(&philos[i]))
 			return (-1);
-		i += 2;
-	}
-	usleep(1000);
-	i = 1;
-	while (i < philos_info->num_of_philos)
-	{
-		if (start_philo(&philos[i]))
-			return (-1);
-		i += 2;
+		i += 1;
 	}
 	return (0);
 }
