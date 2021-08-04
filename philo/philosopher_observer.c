@@ -3,25 +3,6 @@
 #include "philosopher.h"
 #include "utils.h"
 
-static void	set_philos_simulation_end(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->mux);
-	pthread_mutex_lock(&philo->philos_info->mux);
-	philo->is_living = false;
-	philo->philos_info->end_of_simulation = true;
-	pthread_mutex_unlock(&philo->philos_info->mux);
-	pthread_mutex_unlock(&philo->mux);
-	write_philo_status(philo->idx, DIED);
-}
-
-static void	set_philo_has_eaten_completely(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->mux);
-	philo->is_living = false;
-	pthread_mutex_unlock(&philo->mux);
-	write_philo_status(philo->idx, HAS_EATEN);
-}
-
 /* 哲学者の死活監視スレッド
  *
  * 哲学者が死亡した時, 10msの誤差内でメッセージを出す必要があるので
@@ -30,23 +11,40 @@ static void	set_philo_has_eaten_completely(t_philo *philo)
 static void	*thr_philo_observer(void *arg)
 {
 	t_philo	*philo;
+	bool	end_of_simulation;
+	bool	has_eaten_n_times;
+	long	rest_time_ms;
 
 	philo = (t_philo *)arg;
-	while (!is_philo_simulation_ended(philo->philos_info, philo))
+	end_of_simulation = false;
+	while (true)
 	{
-		usleep(200);
-		if (!is_philo_still_alive(philo))
+		usleep(100);
+		pthread_mutex_lock(&philo->mux);
+		has_eaten_n_times
+			= philo->eating_count >= philo->philos_info->must_eat_times;
+		rest_time_ms = philo->philos_info->time_to_die_ms
+			- (get_current_time_ms() - philo->last_eating_ms);
+		pthread_mutex_lock(&philo->philos_info->mux);
+		end_of_simulation = philo->philos_info->end_of_simulation;
+		pthread_mutex_unlock(&philo->philos_info->mux);
+		if (end_of_simulation)
+			break;
+		if (has_eaten_n_times || rest_time_ms <= 0)
 		{
-			set_philos_simulation_end(philo);
+			philo->is_living = false;
+			if (rest_time_ms <= 0)
+			{
+				pthread_mutex_lock(&philo->philos_info->mux);
+				end_of_simulation = true;
+				pthread_mutex_unlock(&philo->philos_info->mux);
+				write_philo_status(philo->idx, DIED);
+			}
+			else
+				write_philo_status(philo->idx, HAS_EATEN);
 			break ;
 		}
-		usleep(200);
-		if (has_philo_eaten_n_times(philo))
-		{
-			set_philo_has_eaten_completely(philo);
-			break ;
-		}
-		usleep(200);
+		pthread_mutex_unlock(&philo->mux);
 	}
 	return ((void *)0);
 }
