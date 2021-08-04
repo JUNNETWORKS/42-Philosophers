@@ -4,6 +4,9 @@
 # include <pthread.h>
 # include <stdbool.h>
 
+// テスト用
+extern pthread_mutex_t writing_mux;
+
 /*
  * EATING -> THINKING -> SLEEPING -> EATING -> ...
  */

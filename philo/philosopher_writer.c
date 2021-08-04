@@ -8,6 +8,7 @@ void	write_philo_status(long philo_idx, enum e_philo_status status)
 	long		philo_no;
 
 	philo_no = philo_idx + 1;
+	pthread_mutex_lock(&writing_mux);
 	if (status == HAS_TAKEN_A_FORK)
 		printf("%ld %ld has taken a fork\n", get_current_time_ms(), philo_no);
 	else if (status == EATING)
@@ -20,4 +21,5 @@ void	write_philo_status(long philo_idx, enum e_philo_status status)
 		printf("%ld %ld died\n", get_current_time_ms(), philo_no);
 	else if (status == HAS_EATEN)
 		printf("%ld %ld has eaten completely\n", get_current_time_ms(), philo_no);
+	pthread_mutex_unlock(&writing_mux);
 }
