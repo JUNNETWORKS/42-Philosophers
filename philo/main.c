@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 			sizeof(pthread_mutex_t) * philos_info.num_of_philos);
 	philos_info.end_of_simulation = false;
 	philo_observers = malloc(
-			sizeof(pthread_mutex_t) * philos_info.num_of_philos);
+			sizeof(pthread_t) * philos_info.num_of_philos);
 	if (!philos || !philos_info.forks || !philo_observers
 		|| pthread_mutex_init(&philos_info.mux, NULL)
 		|| init_forks(philos_info.forks, philos_info.num_of_philos)
