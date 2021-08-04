@@ -53,8 +53,8 @@ void	write_philo_status(pthread_mutex_t *writing_mux,
 // philosopher observer
 int		start_philo_observers(t_philos_info *philos_info,
 			t_philo *philos, pthread_t *philo_observers);
-int		wait_philo_observers(t_philos_info *philos_info,
-			pthread_t *philo_observers);
+int	wait_philo_observers(t_philos_info *philos_info,
+			t_philo *philos, pthread_t *philo_observers);
 // fork
 int		init_forks(pthread_mutex_t *forks, long fork_num);
 void	hold_fork(pthread_mutex_t *forks, long fork_idx);

@@ -71,14 +71,27 @@ int	start_philo_observers(t_philos_info *philos_info,
 	return (0);
 }
 
-int	wait_philo_observers(t_philos_info *philos_info, pthread_t *philo_observers)
+int	wait_philo_observers(t_philos_info *philos_info, t_philo *philos, pthread_t *philo_observers)
 {
 	bool end_of_simulation;
+	bool has_all_philos_eaten;
+	int i;
 
 	(void)philo_observers;
 	end_of_simulation = false;
 	while (!end_of_simulation)
 	{
+		// check if all philosophers has eaten completely
+		if (philos_info->must_eat_times >= 0)
+		{
+			i = 0;
+			has_all_philos_eaten = true;
+			while (i < philos_info->num_of_philos && has_all_philos_eaten)
+				if (philos[i++].eating_count < philos_info->must_eat_times)
+					has_all_philos_eaten = false;
+			if (has_all_philos_eaten)
+				break;
+		}
 		pthread_mutex_lock(&philos_info->mux);
 		end_of_simulation = philos_info->end_of_simulation;
 		pthread_mutex_unlock(&philos_info->mux);
