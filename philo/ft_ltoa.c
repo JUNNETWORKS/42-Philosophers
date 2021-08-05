@@ -17,4 +17,3 @@ int	ltoa_recursive(char *result, long n)
 	result[idx] = '\0';
 	return (idx);
 }
-

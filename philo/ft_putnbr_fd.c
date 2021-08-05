@@ -9,4 +9,3 @@ void	ft_putnbr_fd(long n, int fd)
 	len = ltoa_recursive(result, n);
 	write(fd, result, len + 1);
 }
-

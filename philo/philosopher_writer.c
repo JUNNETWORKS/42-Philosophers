@@ -21,7 +21,8 @@ void	write_philo_status(
 	else if (status == DIED)
 		printf("%ld %ld died\n", get_current_time_ms(), philo_no);
 	else if (status == HAS_EATEN)
-		printf("%ld %ld has eaten completely\n", get_current_time_ms(), philo_no);
+		printf("%ld %ld has eaten completely\n",
+			get_current_time_ms(), philo_no);
 	if (status != DIED)
 		pthread_mutex_unlock(writing_mux);
 }
