@@ -20,7 +20,7 @@ static void	*thr_philo_observer(void *arg)
 	end_of_simulation = false;
 	while (true)
 	{
-		usleep(500);
+		usleep(200);
 		pthread_mutex_lock(&philos_info->mux);
 		end_of_simulation = philos_info->end_of_simulation;
 		pthread_mutex_unlock(&philos_info->mux);
@@ -47,6 +47,7 @@ int	start_philo_observers(t_philos_info *philos_info,
 {
 	long	i;
 
+	usleep(1000);
 	i = 0;
 	while (i < philos_info->num_of_philos)
 	{
@@ -90,7 +91,8 @@ int	wait_philo_observers(t_philos_info *philos_info, t_philo *philos)
 		pthread_mutex_lock(&philos_info->mux);
 		end_of_simulation = philos_info->end_of_simulation;
 		pthread_mutex_unlock(&philos_info->mux);
-		usleep(500);
+		usleep(200);
 	}
+	usleep(1000);
 	return (0);
 }
