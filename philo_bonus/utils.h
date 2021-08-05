@@ -12,7 +12,11 @@ char	*ft_ltoa(long n);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*free_and_rtn_null(void *ptr);
 long	get_current_time_ms(void);
+long	get_current_time_us(void);
 void	precise_sleep_ms(long ms);
+void	precise_sleep_until_ms(long ms);
+void	precise_sleep_us(long us);
+void	precise_sleep_until_us(long us);
 long	arr_find_pid(pid_t *arr, pid_t value, long len);
 
 #endif
