@@ -17,7 +17,7 @@ SRCS := main.c \
   philosopher.c philosopher_actions.c parse_philos_argv.c philosopher_writer.c \
   check_philosopher_status.c \
   philosopher_observer.c \
-  fork.c ft_atol.c ft_isdigit.c ft_strncmp.c get_current_time_ms.c precise_sleep_ms.c ft_putnbr_fd.c ft_ltoa.c
+  fork.c ft_atol.c ft_isdigit.c ft_strncmp.c get_current_time.c precise_sleep.c ft_putnbr_fd.c ft_ltoa.c
 OBJS := $(addprefix $(OBJS_DIR)/, ${SRCS:.c=.o})
 DEPS := $(addprefix $(DEPS_DIR)/, ${SRCS:.c=.d})
 
