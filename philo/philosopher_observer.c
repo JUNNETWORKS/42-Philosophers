@@ -34,8 +34,8 @@ static void	*thr_philo_observer(void *arg)
 		{
 			pthread_mutex_lock(&philos_info->mux);
 			philos_info->end_of_simulation = true;
-			pthread_mutex_unlock(&philos_info->mux);
 			write_philo_status(&philos_info->writing_mux, philo->idx, DIED);
+			pthread_mutex_unlock(&philos_info->mux);
 			break ;
 		}
 	}
