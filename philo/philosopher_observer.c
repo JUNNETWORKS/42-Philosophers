@@ -10,31 +10,32 @@
  */
 static void	*thr_philo_observer(void *arg)
 {
-	t_philo	*philo;
-	bool	end_of_simulation;
-	long	rest_time_ms;
+	t_philo			*philo;
+	t_philos_info	*philos_info;
+	bool			end_of_simulation;
+	long			rest_time_ms;
 
 	philo = (t_philo *)arg;
+	philos_info = philo->philos_info;
 	end_of_simulation = false;
 	while (true)
 	{
-		usleep(200);
-		pthread_mutex_lock(&philo->philos_info->mux);
-		end_of_simulation = philo->philos_info->end_of_simulation;
-		pthread_mutex_unlock(&philo->philos_info->mux);
+		usleep(500);
+		pthread_mutex_lock(&philos_info->mux);
+		end_of_simulation = philos_info->end_of_simulation;
+		pthread_mutex_unlock(&philos_info->mux);
 		if (end_of_simulation)
 			break;
-		usleep(200);
 		pthread_mutex_lock(&philo->mux);
-		rest_time_ms = philo->philos_info->time_to_die_ms
+		rest_time_ms = philos_info->time_to_die_ms
 			- (get_current_time_ms() - philo->last_eating_ms);
 		pthread_mutex_unlock(&philo->mux);
 		if (rest_time_ms <= 0)
 		{
-			pthread_mutex_lock(&philo->philos_info->mux);
-			philo->philos_info->end_of_simulation = true;
-			pthread_mutex_unlock(&philo->philos_info->mux);
-			write_philo_status(&philo->philos_info->writing_mux, philo->idx, DIED);
+			pthread_mutex_lock(&philos_info->mux);
+			philos_info->end_of_simulation = true;
+			pthread_mutex_unlock(&philos_info->mux);
+			write_philo_status(&philos_info->writing_mux, philo->idx, DIED);
 			break ;
 		}
 	}
@@ -81,7 +82,6 @@ int	wait_philo_observers(t_philos_info *philos_info, t_philo *philos)
 				if (philos[i].eating_count < philos_info->must_eat_times)
 					has_all_philos_eaten = false;
 				pthread_mutex_unlock(&philos[i].mux);
-				usleep(200);
 				i++;
 			}
 			if (has_all_philos_eaten)
@@ -90,7 +90,7 @@ int	wait_philo_observers(t_philos_info *philos_info, t_philo *philos)
 		pthread_mutex_lock(&philos_info->mux);
 		end_of_simulation = philos_info->end_of_simulation;
 		pthread_mutex_unlock(&philos_info->mux);
-		usleep(200);
+		usleep(500);
 	}
 	return (0);
 }
