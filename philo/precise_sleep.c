@@ -7,13 +7,13 @@ void	precise_sleep_ms(long ms)
 
 	current_time_ms = get_current_time_ms();
 	while (get_current_time_ms() - current_time_ms < ms)
-		usleep(100);
+		usleep(1000);
 }
 
 void	precise_sleep_until_ms(long ms)
 {
 	while (get_current_time_ms() < ms)
-		usleep(100);
+		usleep(1000);
 }
 
 void	precise_sleep_us(long us)
@@ -22,11 +22,11 @@ void	precise_sleep_us(long us)
 
 	current_time_us = get_current_time_us();
 	while (get_current_time_us() - current_time_us < us)
-		usleep(100);
+		usleep(1000);
 }
 
 void	precise_sleep_until_us(long us)
 {
 	while (get_current_time_us() < us)
-		usleep(100);
+		usleep(1000);
 }
