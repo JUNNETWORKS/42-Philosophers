@@ -13,14 +13,17 @@ static int	philo_try_2_hold_forks(t_philos_info *philos_info, t_philo *philo)
 	hold_fork(philos_info->forks);
 	if (is_philo_simulation_ended(philos_info, philo))
 		return (release_forks_and_rtn_err(philos_info->forks, 1));
-	write_philo_status(philo->philos_info->sem_writing, philo->idx, HAS_TAKEN_A_FORK);
+	write_philo_status(philo->philos_info->sem_writing,
+		philo->idx, HAS_TAKEN_A_FORK);
 	hold_fork(philos_info->forks);
 	if (is_philo_simulation_ended(philos_info, philo))
 		return (release_forks_and_rtn_err(philos_info->forks, 2));
-	write_philo_status(philo->philos_info->sem_writing, philo->idx, HAS_TAKEN_A_FORK);
+	write_philo_status(philo->philos_info->sem_writing,
+		philo->idx, HAS_TAKEN_A_FORK);
 	if (is_philo_simulation_ended(philos_info, philo))
 		return (release_forks_and_rtn_err(philos_info->forks, 2));
-	write_philo_status(philo->philos_info->sem_writing, philo->idx, EATING);
+	write_philo_status(philo->philos_info->sem_writing,
+		philo->idx, EATING);
 	return (0);
 }
 

@@ -20,7 +20,8 @@ int	main(int argc, char **argv)
 	unlink_semaphores(philos_info.num_of_philos);
 	forks = sem_open(SEM_FORKS_STR, O_CREAT | O_EXCL,
 			S_IRWXU, philos_info.num_of_philos);
-	philos_info.sem_writing = sem_open(SEM_WRITING_STR, O_CREAT | O_EXCL, S_IRWXU, 1);
+	philos_info.sem_writing = sem_open(SEM_WRITING_STR,
+			O_CREAT | O_EXCL, S_IRWXU, 1);
 	philos_info.philo_pids = malloc(sizeof(pid_t) * philos_info.num_of_philos);
 	if (!forks || !philos_info.philo_pids
 		|| !sem_open(SEM_HAS_DIED_STR, O_CREAT | O_EXCL, S_IRWXU, 0)
@@ -40,8 +41,6 @@ static void	unlink_semaphores(long philo_num)
 	sem_unlink(SEM_FORKS_STR);
 	sem_unlink(SEM_HAS_DIED_STR);
 	sem_unlink(SEM_WRITING_STR);
-
-	// philosopher's semaphore
 	i = 0;
 	while (i < philo_num)
 	{
@@ -53,4 +52,3 @@ static void	unlink_semaphores(long philo_num)
 		i++;
 	}
 }
-
