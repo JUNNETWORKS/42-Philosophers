@@ -27,4 +27,3 @@ void	write_philo_status(
 	if (status != DIED)
 		sem_post(writing_sem);
 }
-

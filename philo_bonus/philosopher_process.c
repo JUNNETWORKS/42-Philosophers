@@ -8,7 +8,6 @@
 #include "utils.h"
 
 static int		start_philo_thr(t_philo *philo);
-static char		*get_philo_sem_str(long idx);
 static t_philo	*generate_philo(t_philos_info *philos_info, long idx);
 
 void	philo_process(t_philos_info *philos_info, long idx)
@@ -56,7 +55,7 @@ static int	start_philo_thr(t_philo *philo)
 	return (0);
 }
 
-static char	*get_philo_sem_str(long idx)
+char	*get_philo_sem_str(long idx)
 {
 	char	*idx_str;
 	char	*sem_str;

@@ -54,6 +54,7 @@ int		start_philos(t_philos_info *philos_info);
 int		wait_philos(t_philos_info *philos_info);
 // philosopher process
 void	philo_process(t_philos_info *philos_info, long idx);
+char	*get_philo_sem_str(long idx);
 int		philosopher_eat(t_philos_info *philos_info, t_philo *philo);
 int		philosopher_sleep(t_philos_info *philos_info, t_philo *philo);
 bool	is_philo_simulation_ended(t_philos_info *philos_info, t_philo *philo);
