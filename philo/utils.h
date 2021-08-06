@@ -10,8 +10,6 @@ long	get_current_time_ms(void);
 long	get_current_time_us(void);
 void	precise_sleep_ms(long ms);
 void	precise_sleep_until_ms(long ms);
-void	precise_sleep_us(long us);
-void	precise_sleep_until_us(long us);
 int		ltoa_recursive(char *result, long n);
 void	ft_putnbr_fd(long n, int fd);
 
