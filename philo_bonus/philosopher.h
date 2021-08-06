@@ -12,6 +12,7 @@
 # define PHILO_END_ERR 2
 # define SEM_FORKS_STR "/forks"
 # define SEM_HAS_DIED_STR "/has_died"
+# define SEM_WRITING_STR "/writing"
 
 /*
  * EATING -> THINKING -> SLEEPING -> EATING -> ...
@@ -32,6 +33,7 @@ typedef struct s_philos_info {
 	long			time_to_sleep_ms;
 	long			must_eat_times;
 	sem_t			*forks;
+	sem_t			*sem_writing;
 	pid_t			*philo_pids;
 }	t_philos_info;
 
@@ -57,7 +59,8 @@ int		philosopher_sleep(t_philos_info *philos_info, t_philo *philo);
 bool	is_philo_simulation_ended(t_philos_info *philos_info, t_philo *philo);
 bool	is_philo_still_alive(t_philo *philo);
 bool	has_philo_eaten_n_times(t_philo *philo);
-void	write_philo_status(long philo_idx, enum e_philo_status status, long ms);
+void	write_philo_status(
+			sem_t *writing_sem, long philo_idx, enum e_philo_status status);
 // observer
 int		observe_philo(t_philos_info *philos_info, t_philo *philo);
 // fork

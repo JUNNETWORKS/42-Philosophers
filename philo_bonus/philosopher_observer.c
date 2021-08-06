@@ -10,7 +10,7 @@ static void	set_philos_simulation_end(t_philo *philo)
 {
 	sem_t	*has_died;
 
-	write_philo_status(philo->idx, DIED, get_current_time_ms());
+	write_philo_status(philo->philos_info->sem_writing, philo->idx, DIED);
 	has_died = sem_open(SEM_HAS_DIED_STR, O_EXCL, S_IRWXU);
 	sem_post(has_died);
 	sem_close(has_died);
@@ -24,7 +24,7 @@ static void	set_philo_has_eaten_completely(t_philo *philo)
 	sem_wait(philo->sem);
 	philo->is_living = false;
 	sem_post(philo->sem);
-	write_philo_status(philo->idx, HAS_EATEN, get_current_time_ms());
+	write_philo_status(philo->philos_info->sem_writing, philo->idx, HAS_EATEN);
 }
 
 /* 哲学者の死活監視
