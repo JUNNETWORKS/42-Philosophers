@@ -19,14 +19,6 @@ static void	set_philos_simulation_end(t_philo *philo)
 	sem_post(philo->sem);
 }
 
-static void	set_philo_has_eaten_completely(t_philo *philo)
-{
-	sem_wait(philo->sem);
-	philo->is_living = false;
-	sem_post(philo->sem);
-	write_philo_status(philo->philos_info->sem_writing, philo->idx, HAS_EATEN);
-}
-
 /* Monitor if philosopher has died.
  */
 int	observe_philo(t_philos_info *philos_info, t_philo *philo)
@@ -39,12 +31,6 @@ int	observe_philo(t_philos_info *philos_info, t_philo *philo)
 			set_philos_simulation_end(philo);
 			return (PHILO_END_DIE);
 		}
-		usleep(100);
-		if (has_philo_eaten_n_times(philo))
-		{
-			set_philo_has_eaten_completely(philo);
-			return (PHILO_END_EATEN);
-		}
-		usleep(100);
+		usleep(1000);
 	}
 }
