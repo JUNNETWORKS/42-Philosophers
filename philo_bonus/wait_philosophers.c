@@ -24,7 +24,7 @@ static void	*thr_observe_has_philo_died(void *arg)
 	sem_wait(has_died);
 	i = 0;
 	while (i < philos_info->num_of_philos)
-		kill(philos_info->philo_pids[i++], SIGKILL);
+		kill(philos_info->philo_pids[i++], SIGTERM);
 	sem_close(has_died);
 	return (0);
 }
@@ -45,7 +45,7 @@ static void	*thr_observe_has_philo_eaten_completely(void *arg)
 	sem_close(philo_has_eaten_count);
 	i = 0;
 	while (i < philos_info->num_of_philos)
-		kill(philos_info->philo_pids[i++], SIGKILL);
+		kill(philos_info->philo_pids[i++], SIGTERM);
 	return (0);
 }
 
