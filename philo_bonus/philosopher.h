@@ -12,6 +12,7 @@
 # define PHILO_END_ERR 2
 # define SEM_FORKS_STR "/forks"
 # define SEM_HAS_DIED_STR "/has_died"
+# define SEM_HAS_EATEN_COUNT_STR "/has_eaten_count"
 # define SEM_WRITING_STR "/writing"
 
 /*

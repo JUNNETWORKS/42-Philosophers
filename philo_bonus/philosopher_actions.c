@@ -8,6 +8,18 @@
 #include "philosopher.h"
 #include "utils.h"
 
+static int	post_philo_has_eaten_count(void)
+{
+	sem_t	*philo_has_eaten_count;
+
+	philo_has_eaten_count = sem_open(SEM_HAS_EATEN_COUNT_STR, O_EXCL, S_IRWXU);
+	if (!philo_has_eaten_count)
+		return (-1);
+	sem_post(philo_has_eaten_count);
+	sem_close(philo_has_eaten_count);
+	return (0);
+}
+
 static int	philo_try_2_hold_forks(t_philos_info *philos_info, t_philo *philo)
 {
 	hold_fork(philos_info->forks);
@@ -39,6 +51,8 @@ int	philosopher_eat(t_philos_info *philos_info, t_philo *philo)
 	release_forks(philos_info->forks, 2);
 	sem_wait(philo->sem);
 	philo->eating_count += 1;
+	if (philo->eating_count == philos_info->must_eat_times)
+		post_philo_has_eaten_count();
 	philo->status = SLEEPING;
 	sem_post(philo->sem);
 	return (0);

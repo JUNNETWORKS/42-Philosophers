@@ -19,13 +19,33 @@ static void	*thr_observe_has_philo_died(void *arg)
 
 	philos_info = (t_philos_info *)arg;
 	has_died = sem_open(SEM_HAS_DIED_STR, O_EXCL, S_IRWXU);
-	if (sem_wait(has_died) == 0)
-	{
-		i = 0;
-		while (i < philos_info->num_of_philos)
-			kill(philos_info->philo_pids[i++], SIGKILL);
-	}
+	if (!has_died)
+		return ((void *)1);
+	sem_wait(has_died);
+	i = 0;
+	while (i < philos_info->num_of_philos)
+		kill(philos_info->philo_pids[i++], SIGKILL);
 	sem_close(has_died);
+	return (0);
+}
+
+static void	*thr_observe_has_philo_eaten_completely(void *arg)
+{
+	sem_t			*philo_has_eaten_count;
+	t_philos_info	*philos_info;
+	long			i;
+
+	philos_info = (t_philos_info *)arg;
+	philo_has_eaten_count = sem_open(SEM_HAS_EATEN_COUNT_STR, O_EXCL, S_IRWXU);
+	if (!philo_has_eaten_count)
+		return ((void *)1);
+	i = 0;
+	while (i++ < philos_info->num_of_philos)
+		sem_wait(philo_has_eaten_count);
+	sem_close(philo_has_eaten_count);
+	i = 0;
+	while (i < philos_info->num_of_philos)
+		kill(philos_info->philo_pids[i++], SIGKILL);
 	return (0);
 }
 
@@ -35,6 +55,10 @@ static int	start_philos_observer(t_philos_info *philos_info)
 
 	if (pthread_create(&thr_id, NULL,
 			thr_observe_has_philo_died, (void *)philos_info))
+		return (-1);
+	pthread_detach(thr_id);
+	if (pthread_create(&thr_id, NULL,
+			thr_observe_has_philo_eaten_completely, (void *)philos_info))
 		return (-1);
 	pthread_detach(thr_id);
 	return (0);
