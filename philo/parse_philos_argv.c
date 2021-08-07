@@ -14,7 +14,7 @@ int	parse_philos_argv(int argc, char **argv, t_philos_info *philos_info)
 {
 	long	error;
 
-	if (argc < 5)
+	if (!(argc == 5 || argc == 6))
 		return (print_err_msg_and_rtn());
 	error = 0;
 	error |= ft_atol(argv[1], &philos_info->num_of_philos);
