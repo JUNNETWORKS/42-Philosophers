@@ -27,7 +27,7 @@ static void	set_philo_has_eaten_completely(t_philo *philo)
 	write_philo_status(philo->philos_info->sem_writing, philo->idx, HAS_EATEN);
 }
 
-/* 哲学者の死活監視
+/* Monitor if philosopher has died.
  */
 int	observe_philo(t_philos_info *philos_info, t_philo *philo)
 {

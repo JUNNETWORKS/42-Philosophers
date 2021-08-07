@@ -8,10 +8,12 @@ static bool	has_philo_simulation_ended(
 static void	end_simulation(
 				t_philos_info *philos_info, t_philo *philo);
 
-/* 哲学者の死活監視スレッド
+/* The objective of this thread is to monitor if philosopher has died.
  *
- * 哲学者が死亡した時, 10msの誤差内でメッセージを出す必要があるので
- * 各哲学者に付き1死活監視スレッドが必要になる
+ * Q. Why should we create a thread to monitor philosopher?
+ * A. Because we must print that
+ *   philosopher has dead in 10 ms
+ *   after philosopher has died.
  */
 void	*thr_philo_observer(void *arg)
 {

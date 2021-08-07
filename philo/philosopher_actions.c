@@ -31,9 +31,11 @@ static int	philo_try_2_hold_forks(t_philos_info *philos_info, t_philo *philo,
 	return (0);
 }
 
-/* リソース階層による解法
- * 各哲学者は大きいidxのフォークを最初に取る. その後小さいidxのフォークを取る風にする.
- * 食後は小さいフォークを解放してから大きいidxのフォークを解放する.
+/* Resource hierarchy solution
+ * Each philosopher takes a big index (right side) fork first,
+ *   then takes a small index (left side) fork.
+ * After eating is finished, release the small index (left side) fork first,
+ *   then release the big index fork.
  */
 int	philosopher_eat(t_philos_info *philos_info, t_philo *philo)
 {
