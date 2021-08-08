@@ -32,9 +32,6 @@ long	ft_atol(const char *nptr, long *num)
 
 	np = 1;
 	tmp = 0;
-	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\f'
-		|| *nptr == '\r' || *nptr == '\n' || *nptr == '\v')
-		nptr++;
 	if (*nptr == '+' || *nptr == '-')
 		if (*nptr++ == '-')
 			np = -1;
@@ -42,6 +39,8 @@ long	ft_atol(const char *nptr, long *num)
 		return (-1);
 	while (ft_isdigit(*nptr))
 		tmp = tmp * 10 + (*nptr++ - '0');
+	if (*nptr != '\0')
+		return (-1);
 	*num = np * tmp;
 	return (0);
 }
